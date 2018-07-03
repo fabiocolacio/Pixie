@@ -6,7 +6,8 @@ EXECUTABLE_NAME = 'pixie'
 gnome = import('gnome')
 
 src = [
-    'src/pixie.cpp'
+    'src/pixie.cpp',
+    'src/pixie-application.cpp'
 ]
 
 deps = [

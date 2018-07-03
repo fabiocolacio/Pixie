@@ -1,6 +1,7 @@
-#include <iostream>
+#include "pixie-application.hpp"
 
 int main(int argc, char *argv[]) {
-    std::cout << "Pixie!" << std::endl;
-    return 0;
+    Pixie::Application app;
+    int status = app.run(argc, argv);
+    return status;
 }
