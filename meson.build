@@ -1,4 +1,5 @@
-project('Pixie', 'cpp')
+project('Pixie', 'cpp',
+    default_options: [ 'cpp_std=c++11' ])
 
 ID = 'com.github.fabiocolacio.pixie'
 EXECUTABLE_NAME = 'pixie'
@@ -7,7 +8,10 @@ gnome = import('gnome')
 
 src = [
     'src/pixie.cpp',
-    'src/pixie-application.cpp'
+    'src/pixie-application.cpp',
+    'src/pixie-layer.cpp',
+    'src/pixie-sprite.cpp',
+    'src/pixie-sprite-editor.cpp'
 ]
 
 deps = [
