@@ -19,6 +19,8 @@ protected:
 
 private:
     Sprite &sprite;
+
+    double zoom_factor = 10.0;
     bool read_only;
 };
 

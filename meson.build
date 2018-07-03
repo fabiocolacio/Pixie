@@ -11,6 +11,7 @@ src = [
     'src/pixie-application.cpp',
     'src/pixie-layer.cpp',
     'src/pixie-sprite.cpp',
+    'src/pixie-document.cpp',
     'src/pixie-sprite-editor.cpp'
 ]
 
