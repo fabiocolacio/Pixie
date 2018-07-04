@@ -9,6 +9,10 @@ gnome = import('gnome')
 src = [
     'src/pixie.cpp',
     'src/pixie-application.cpp',
+    'src/pixie-coord.cpp',
+    'src/pixie-coordf.cpp',
+    'src/pixie-rect.cpp',
+    'src/pixie-rectf.cpp',
     'src/pixie-layer.cpp',
     'src/pixie-sprite.cpp',
     'src/pixie-document.cpp',
