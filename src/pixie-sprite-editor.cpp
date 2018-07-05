@@ -10,6 +10,11 @@ SpriteEditor::SpriteEditor(Sprite &sprite, bool read_only) :
     sprite(sprite),
     read_only(read_only)
 {
+    add_events(
+        Gdk::KEY_PRESS_MASK |
+        Gdk::BUTTON_PRESS_MASK |
+        Gdk::BUTTON_RELEASE_MASK |
+        Gdk::POINTER_MOTION_MASK);
     update_size();
 }
 
@@ -86,3 +91,33 @@ bool SpriteEditor::on_draw(const Cairo::RefPtr<Cairo::Context> &cr)
 
     return false;
 }
+
+bool SpriteEditor::on_event(GdkEvent *event)
+{
+    switch (event->type) {
+        case GDK_KEY_PRESS: {
+            std::cout << "key press!" << std::endl;
+            break;
+        }
+
+        case GDK_BUTTON_PRESS: {
+            std::cout << "button press!" << std::endl;
+            break;
+        }
+
+        case GDK_BUTTON_RELEASE: {
+            std::cout << "button release!" << std::endl;
+            break;
+        }
+
+        case GDK_MOTION_NOTIFY: {
+            std::cout << "motion notify!" << std::endl;
+            break;
+        }
+
+        default: break;
+    }
+
+    return false;
+}
+
