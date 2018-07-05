@@ -10,6 +10,7 @@ public:
     Layer(const std::string &filename);
 
     Glib::RefPtr<Gdk::Pixbuf> &get_pixbuf();
+    const Glib::RefPtr<Gdk::Pixbuf> &get_pixbuf() const;
 
 private:
     Glib::RefPtr<Gdk::Pixbuf> pixbuf;

@@ -11,3 +11,8 @@ Glib::RefPtr<Gdk::Pixbuf> &Layer::get_pixbuf()
 {
     return pixbuf;
 }
+
+const Glib::RefPtr<Gdk::Pixbuf> &Layer::get_pixbuf() const
+{
+    return pixbuf;
+}

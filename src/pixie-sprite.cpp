@@ -11,7 +11,42 @@ Sprite::Sprite(const std::string &filename)
     layers.push_back(Layer(filename)); 
 }
 
+std::size_t Sprite::n_layers() const
+{
+    return layers.size();
+}
+
 std::vector<Layer> &Sprite::get_layers()
 {
     return layers;
+}
+
+const std::vector<Layer> &Sprite::get_layers() const
+{
+    return layers;
+}
+
+Layer &Sprite::operator[](std::size_t idx)
+{
+    return get_layers()[idx];
+}
+
+const Layer &Sprite::operator[](std::size_t idx) const
+{
+    return get_layers()[idx];
+}
+
+Coord Sprite::size() const
+{
+    return Coord( width(), height() );
+}
+
+int Sprite::width() const
+{
+    return layers[0].get_pixbuf()->get_width();
+}
+
+int Sprite::height() const
+{
+    return layers[0].get_pixbuf()->get_height();
 }

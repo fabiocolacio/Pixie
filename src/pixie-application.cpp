@@ -38,12 +38,12 @@ void Application::on_open(const Gio::Application::type_vec_files &files,
 
         auto sprite = new Sprite(filename);
 
-        SpriteEditor editor(*sprite);
+        auto editor = new SpriteEditor(*sprite);
 
         auto window = new Gtk::Window;
         window->set_title(filename);
         window->set_default_size(500, 500);
-        window->add(editor);
+        window->add(*editor);
         window->show_all();
         add_window(*window);
     }

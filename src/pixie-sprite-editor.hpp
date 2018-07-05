@@ -3,6 +3,7 @@
 
 #include <gtkmm/drawingarea.h>
 
+#include "pixie-rectf.hpp"
 #include "pixie-sprite.hpp"
 
 namespace Pixie {
@@ -18,10 +19,16 @@ protected:
     bool on_draw(const Cairo::RefPtr<Cairo::Context> &cr) override;
 
 private:
+    void update_size();
+    RectF get_image_bounds() const;
+
     Sprite &sprite;
 
-    double zoom_factor = 10.0;
     bool read_only;
+
+    float zoom_factor = 10.0;
+    float min_padding = 100.0;
+    bool show_grid = false;
 };
 
 }
