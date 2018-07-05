@@ -54,9 +54,9 @@ bool SpriteEditor::on_draw(const Cairo::RefPtr<Cairo::Context> &cr)
     RectF image_bounds = get_image_bounds();    
     auto layers = sprite.get_layers();
 
+    // Render Layers
     cr->save();
     cr->scale(zoom_factor, zoom_factor);
-
     for (auto layer : layers) {
         Gdk::Cairo::set_source_pixbuf(cr, layer.get_pixbuf(),
             image_bounds.left() / zoom_factor,
@@ -64,11 +64,25 @@ bool SpriteEditor::on_draw(const Cairo::RefPtr<Cairo::Context> &cr)
         auto pattern = cr->get_source();
         cairo_pattern_set_filter(pattern->cobj(), CAIRO_FILTER_NEAREST);
         cr->paint();
-
-        std::cout << "Drew a thing!" << std::endl;
     }
-
     cr->restore();
+
+    // Render Grid
+    if (show_grid) {
+        cr->set_source_rgba(0.0, 0.0, 0.0, 1.0);
+        cr->set_line_width(0.5);
+        for (int x = 0; x < sprite.width() + 1; x++) {
+            float x_scaled = image_bounds.left() + (x * zoom_factor);
+            cr->move_to(x_scaled, image_bounds.top());
+            cr->line_to(x_scaled, image_bounds.bottom());
+        }
+        for (int y = 0; y < sprite.height() + 1; y++) {
+            float y_scaled = image_bounds.top() + (y * zoom_factor);
+            cr->move_to(image_bounds.left(), y_scaled);
+            cr->line_to(image_bounds.right(), y_scaled);
+        }
+        cr->stroke();
+    }
 
     return false;
 }

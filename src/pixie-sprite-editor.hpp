@@ -28,7 +28,7 @@ private:
 
     float zoom_factor = 10.0;
     float min_padding = 100.0;
-    bool show_grid = false;
+    bool show_grid = true;
 };
 
 }
