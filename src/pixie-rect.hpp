@@ -11,13 +11,17 @@ struct Rect {
     Coord br;
 
     Rect(Coord tl, Coord br);
+    Rect(CoordF tl, CoordF br);
     Rect(int x, int y, int width, int height);
+    Rect(float x, float y, float widht, float height);
 
     int &top();
     int &left();
     int &right();
     int &bottom();
 
+    int x() const;
+    int y() const;
     int width() const;
     int height() const;
 

@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "pixie-coord.hpp"
+
 #include "pixie-sprite-editor.hpp"
 
 using namespace Pixie;
@@ -10,11 +12,14 @@ SpriteEditor::SpriteEditor(Sprite &sprite, bool read_only) :
     sprite(sprite),
     read_only(read_only)
 {
+    current_tool = &pencil;
+
     add_events(
         Gdk::KEY_PRESS_MASK |
         Gdk::BUTTON_PRESS_MASK |
         Gdk::BUTTON_RELEASE_MASK |
         Gdk::POINTER_MOTION_MASK);
+
     update_size();
 }
 
@@ -25,7 +30,7 @@ void SpriteEditor::update_size()
         (zoom_factor * sprite.height()) + (2 * min_padding));
 }
 
-RectF SpriteEditor::get_image_bounds() const
+RectF SpriteEditor::get_sprite_bounds() const
 {
     int min_width, min_height;
     int width = get_allocated_width();
@@ -44,6 +49,33 @@ RectF SpriteEditor::get_image_bounds() const
     return RectF(x, y, swidth, sheight);
 }
 
+RectF SpriteEditor::get_selected_pixel_bounds() const
+{
+    RectF sprite_bounds = get_sprite_bounds();
+    Coord pixel = get_selected_pixel_coord();
+
+    return (pixel.x >= 0 && pixel.y >= 0)
+        ? RectF(
+            sprite_bounds.left() + pixel.x * zoom_factor,
+            sprite_bounds.top() + pixel.y * zoom_factor,
+            zoom_factor,
+            zoom_factor)
+        : RectF(CoordF(-1, -1), CoordF(-1, -1));
+}
+
+Coord SpriteEditor::get_selected_pixel_coord() const
+{
+    RectF sprite_bounds = get_sprite_bounds();
+    return (sprite_bounds.contains(cursor_coord))
+        ? (cursor_coord - sprite_bounds.tl) / zoom_factor
+        : Coord(-1, -1);
+}
+
+Coord SpriteEditor::get_cursor_coord() const
+{
+    return cursor_coord;
+}
+
 bool SpriteEditor::get_read_only() const
 {
     return read_only;
@@ -54,12 +86,32 @@ void SpriteEditor::set_read_only(bool state)
     read_only = state;
 }
 
+float SpriteEditor::get_zoom_factor() const
+{
+    return zoom_factor;
+}
+
+void SpriteEditor::set_zoom_factor(float zoom_factor)
+{
+    this->zoom_factor = zoom_factor;
+}
+
+bool SpriteEditor::get_show_grid() const
+{
+    return show_grid;
+}
+
+void SpriteEditor::set_show_grid(bool show_grid)
+{
+    this->show_grid = show_grid;
+}
+
 bool SpriteEditor::on_draw(const Cairo::RefPtr<Cairo::Context> &cr)
 {
-    RectF image_bounds = get_image_bounds();    
+    RectF image_bounds = get_sprite_bounds();    
     auto layers = sprite.get_layers();
 
-    // Render Layers
+    // Render Layers //
     cr->save();
     cr->scale(zoom_factor, zoom_factor);
     for (auto layer : layers) {
@@ -72,7 +124,12 @@ bool SpriteEditor::on_draw(const Cairo::RefPtr<Cairo::Context> &cr)
     }
     cr->restore();
 
-    // Render Grid
+    // Draw Cursor //
+    if (current_tool != nullptr) {
+        current_tool->draw_cursor(cr, *this);
+    }
+
+    // Render Grid //
     if (show_grid) {
         cr->set_source_rgba(0.0, 0.0, 0.0, 1.0);
         cr->set_line_width(0.5);
@@ -111,12 +168,19 @@ bool SpriteEditor::on_event(GdkEvent *event)
         }
 
         case GDK_MOTION_NOTIFY: {
-            std::cout << "motion notify!" << std::endl;
+            cursor_coord = Coord(
+                event->motion.x,
+                event->motion.y);
+            
+            std::cout << "Selected pixel: " << get_selected_pixel_coord() << std::endl;
+
             break;
         }
 
         default: break;
     }
+
+    queue_draw();
 
     return false;
 }

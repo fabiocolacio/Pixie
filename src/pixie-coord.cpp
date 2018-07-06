@@ -2,11 +2,9 @@
 
 using namespace Pixie;
 
-Coord::Coord(int x, int y) :
-    x(x),
-    y(y)
-{
-}
+Coord::Coord(int x, int y) : x(x), y(y) { }
+
+Coord::Coord(CoordF coord) : x((int) coord.x), y((int) coord.y) { }
 
 Coord Coord::transform(Transform t) const
 {
@@ -35,3 +33,9 @@ CoordF Coord::operator/(float scalar) const
 {
     return { x / scalar, y / scalar };
 }
+
+std::ostream &Pixie::operator<<(std::ostream &stream, const Coord &coord)
+{
+    return stream << "(" << coord.x << ", " << coord.y << ")";
+}
+

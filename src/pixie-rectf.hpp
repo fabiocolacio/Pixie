@@ -1,6 +1,8 @@
 #ifndef __PIXIE_RECTF_HPP__
 #define __PIXIE_RECTF_HPP__
 
+#include "pixie-coord.hpp"
+#include "pixie-rect.hpp"
 #include "pixie-coordf.hpp"
 #include "pixie-transformf.hpp"
 
@@ -18,6 +20,8 @@ struct RectF {
     float &right();
     float &bottom();
 
+    float x() const;
+    float y() const;
     float width() const;
     float height() const;
 
@@ -25,7 +29,9 @@ struct RectF {
     float perimeter() const;
 
     bool contains(CoordF c) const;
+    bool contains(Coord c) const;
     bool contains(RectF r) const;
+    bool contains(Rect r) const;
 
     RectF transform(TransformF t) const;
 

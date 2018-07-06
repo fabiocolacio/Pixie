@@ -2,21 +2,37 @@
 
 using namespace Pixie;
 
-Rect::Rect(Coord tl, Coord br) :
-    tl(tl),
-    br(br)
-{
-}
+Rect::Rect(Coord tl, Coord br) : tl(tl), br(br) { }
+
+Rect::Rect(CoordF tl, CoordF br) : tl(Coord(tl)), br(Coord(br)) { }
 
 Rect::Rect(int x, int y, int width, int height) :
-    tl({x, y}),
-    br({x + width, y + height})
+    tl(Coord(x, y)),
+    br(Coord(x + width, y + height))
 {
+
+}
+
+Rect::Rect(float x, float y, float width, float height) :
+    tl(CoordF(x, y)),
+    br(CoordF(x, y) + CoordF(width, height))
+{
+
+}
+
+int Rect::x() const
+{
+    return tl.x;
+}
+
+int Rect::y() const
+{
+    return tl.y;
 }
 
 int Rect::width() const
 {
-    return br.y - tl.x;
+    return br.x - tl.x;
 }
 
 int Rect::height() const

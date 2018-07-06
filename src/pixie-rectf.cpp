@@ -14,9 +14,19 @@ RectF::RectF(float x, float y, float width, float height) :
 {
 }
 
+float RectF::x() const
+{
+    return tl.x;
+}
+
+float RectF::y() const
+{
+    return tl.y;
+}
+
 float RectF::width() const
 {
-    return br.y - tl.x;
+    return br.x - tl.x;
 }
 
 float RectF::height() const
@@ -60,7 +70,18 @@ bool RectF::contains(CoordF c) const
             c.y > tl.y && c.y < br.y);
 }
 
+bool RectF::contains(Coord c) const
+{
+    return (c.x > tl.x && c.x < br.x &&
+            c.y > tl.y && c.y < br.y);
+}
+
 bool RectF::contains(RectF r) const
+{
+    return (contains(r.tl) && contains(r.br));
+}
+
+bool RectF::contains(Rect r) const
 {
     return (contains(r.tl) && contains(r.br));
 }
