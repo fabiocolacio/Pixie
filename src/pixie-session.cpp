@@ -28,4 +28,3 @@ std::string Session::get_title() const
 {
     return title;
 }
-
