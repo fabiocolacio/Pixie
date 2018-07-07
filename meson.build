@@ -16,9 +16,7 @@ src = [
     'src/pixie-rectf.cpp',
     'src/pixie-layer.cpp',
     'src/pixie-sprite.cpp',
-    'src/pixie-document.cpp',
-    'src/pixie-sprite-editor.cpp',
-    'src/pixie-pencil.cpp'
+    'src/pixie-document.cpp'
 ]
 
 deps = [

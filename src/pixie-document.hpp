@@ -5,7 +5,6 @@
 
 #include <string>
 
-#include "pixie-sprite-editor.hpp"
 #include "pixie-sprite.hpp"
 
 namespace Pixie {
@@ -14,7 +13,11 @@ class Document {
 public:
     Document(const std::string &filename);
 
-    Sprite sprite;
+    int width() const;
+    int height() const;
+    Coord size() const;
+
+    std::vector<Sprite> sprites;
     Glib::RefPtr<Gio::File> file;
 };
 
