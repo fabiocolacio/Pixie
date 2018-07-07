@@ -64,7 +64,7 @@ Coord Session::get_selected_pixel_coord() const
         : Coord(-1, -1);
 }
 
-bool Session::draw_editor(const RefPtr<Context> &cr)
+bool Session::editor_draw(const RefPtr<Context> &cr)
 {
     RectF image_bounds = get_sprite_bounds();
     auto layers = document.sprites[sprite_index].get_layers();
@@ -104,11 +104,48 @@ bool Session::draw_editor(const RefPtr<Context> &cr)
     return false;
 }
 
+bool Session::editor_event(GdkEvent *event)
+{
+    switch (event->type) {
+        case GDK_KEY_PRESS: {
+            break;
+        }
+
+        case GDK_BUTTON_PRESS: {
+            break;
+        }
+
+        case GDK_BUTTON_RELEASE: {
+            break;
+        }
+
+        case GDK_MOTION_NOTIFY: {
+            cursor_coord = Coord(
+                event->motion.x,
+                event->motion.y);
+            break;
+        }
+
+        default: break;
+    }
+
+    editor.queue_draw();
+
+    return false;
+}
+
 void Session::init_ui()
 {
     update_editor_size();
+    editor.add_events(
+        Gdk::KEY_PRESS_MASK |
+        Gdk::BUTTON_PRESS_MASK |
+        Gdk::BUTTON_RELEASE_MASK |
+        Gdk::POINTER_MOTION_MASK);
+    editor.signal_event()
+        .connect(sigc::mem_fun(*this, &Session::editor_event));
     editor.signal_draw()
-        .connect(sigc::mem_fun(*this, &Session::draw_editor));
+        .connect(sigc::mem_fun(*this, &Session::editor_draw));
     pack_start(editor);
 
     title = document.file->get_basename();

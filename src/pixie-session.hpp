@@ -26,7 +26,8 @@ private:
     RectF get_selected_pixel_bounds() const;
     Coord get_selected_pixel_coord() const;
     void update_editor_size();
-    bool draw_editor(const Cairo::RefPtr<Cairo::Context> &cr);
+    bool editor_draw(const Cairo::RefPtr<Cairo::Context> &cr);
+    bool editor_event(GdkEvent *event);
 
     Document document;
     std::string title = "Untitled Document";
