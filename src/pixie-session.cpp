@@ -1,4 +1,5 @@
 #include <gdkmm/general.h>
+#include <gtkmm/scrolledwindow.h>
 
 #include "pixie-session.hpp"
 
@@ -136,6 +137,7 @@ bool Session::editor_event(GdkEvent *event)
 
 void Session::init_ui()
 {
+    // Editor //
     update_editor_size();
     editor.add_events(
         Gdk::KEY_PRESS_MASK |
@@ -146,7 +148,11 @@ void Session::init_ui()
         .connect(sigc::mem_fun(*this, &Session::editor_event));
     editor.signal_draw()
         .connect(sigc::mem_fun(*this, &Session::editor_draw));
-    pack_start(editor);
+
+    // Scrolled Window //
+    auto scroll = Gtk::manage(new Gtk::ScrolledWindow());
+    scroll->add(editor); 
+    pack_start(*scroll);
 
     title = document.file->get_basename();
 }
