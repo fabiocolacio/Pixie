@@ -32,7 +32,7 @@ void Application::on_activate()
 void Application::on_open(const Gio::Application::type_vec_files &files,
                           const Glib::ustring &hint)
 {
-    for (int i = 0; i < files.size(); i++) {
+    for (size_t i = 0; i < files.size(); i++) {
         auto filename = files[i]->get_path();
 
         std::cout << "Opening file: '" << filename << "'\n";
