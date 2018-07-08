@@ -48,27 +48,3 @@ void Pencil::draw_cursor(const RefPtr<Context> &cr, Session &session)
     }
 }
 
-/*
-Gtk::Toolbar *Pencil::get_toolbar()
-{
-    Gtk::Toolbar *toolbar = new Gtk::Toolbar;
-    Gtk::ToolItem *item = nullptr;
-
-    // Size SpinButton //
-    item = Gtk::manage(new Gtk::ToolItem);
-    auto adj = Gtk::Adjustment::create(
-        size, // value
-        1.0,  // lower bound
-        50.0, // upper bound
-        1.0,  // step increment
-        5.0,  // page increment
-        0.0); // page size
-    auto spin_button = Gtk::manage(new Gtk::SpinButton(adj));
-    item->set_tooltip_text("size");
-    item->add(*spin_button);
-    toolbar->append(*item);
-
-    return toolbar;
-}
-*/
-

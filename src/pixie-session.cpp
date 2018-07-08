@@ -4,6 +4,8 @@
 #include <gtkmm/adjustment.h>
 #include <gtkmm/toolitem.h>
 #include <gtkmm/spinbutton.h>
+#include <gtkmm/comboboxtext.h>
+#include <gtkmm/separatortoolitem.h>
 
 #include "pixie-pencil.hpp"
 #include "pixie-session.hpp"
@@ -52,10 +54,35 @@ void Session::init()
             5.0,  // page increment
             0.0); // page size
         auto spin_button = Gtk::manage(new Gtk::SpinButton(adj));
-        item->set_tooltip_text("size");
+        spin_button->set_tooltip_text("size");
         item->add(*spin_button);
         toolbar->append(*item);
+
+        // Tip Combobox //
+        item = Gtk::manage(new Gtk::ToolItem);
+        auto combo_box = Gtk::manage(new Gtk::ComboBoxText);
+        combo_box->append("Square");
+        combo_box->append("Diamond");
+        combo_box->set_active(0);
+        combo_box->set_tooltip_text("tip");
+        item->add(*combo_box);
+        toolbar->append(*item);
         
+        item = Gtk::manage(new Gtk::SeparatorToolItem);
+        toolbar->append(*item);
+
+        // Mode ComboBox //
+        item = Gtk::manage(new Gtk::ToolItem);
+        combo_box = Gtk::manage(new Gtk::ComboBoxText);
+        combo_box->append("Sprite Mode");
+        combo_box->append("Animation Mode");
+        combo_box->append("Tile Mode");
+        combo_box->set_active(0);
+        combo_box->set_tooltip_text("editor mode");
+        item->add(*combo_box);
+        toolbar->append(*item);
+       
+        toolbar->set_show_arrow(true);
         pack_start(*toolbar, false, true);
     }
 

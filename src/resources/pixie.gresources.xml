@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <gresources>
     <gresource prefix="/com/github/fabiocolacio/pixie">
-        <file>ui/pixie-pencil-settings.ui</file>
+        <file>ui/pixie-session.ui</file>
     </gresource>
 </gresources>

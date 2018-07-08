@@ -1,10 +1,16 @@
-project('Pixie', 'cpp',
+project('Pixie', 'c', 'cpp',
     default_options: [ 'cpp_std=c++11' ])
 
 ID = 'com.github.fabiocolacio.pixie'
 EXECUTABLE_NAME = 'pixie'
 
 gnome = import('gnome')
+
+res = gnome.compile_resources(
+    'pixie_resources',
+    'src/resources/pixie.gresources.xml',
+    source_dir: 'src/resources'
+)
 
 src = [
     'src/pixie.cpp',
@@ -17,7 +23,8 @@ src = [
     'src/pixie-rectf.cpp',
     'src/pixie-layer.cpp',
     'src/pixie-sprite.cpp',
-    'src/pixie-document.cpp'
+    'src/pixie-document.cpp',
+    res
 ]
 
 deps = [

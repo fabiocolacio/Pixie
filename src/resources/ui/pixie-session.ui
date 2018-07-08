@@ -1,0 +1,16 @@
+<?xml version="1.0" encodng="utf-8"?>
+<interface>
+    <object class="GtkListStore" id="tip_list">
+        <columns>
+            <column type="gchararray"/>
+        </columns>
+        <data>
+            <row>
+                <col id="0">Diamond</col>
+            </row>
+            <row>
+                <col id="0" translatable="yes">Square</col>
+            </row>
+        </data>
+    </object>
+</interface>
