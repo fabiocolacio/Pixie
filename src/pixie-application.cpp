@@ -5,6 +5,7 @@
 #include "pixie-sprite.hpp"
 #include "pixie-sprite-editor.hpp"
 #include "pixie-session.hpp"
+#include "pixie-window.hpp"
 
 #include "pixie-application.hpp"
 
@@ -37,13 +38,9 @@ void Application::on_open(const Gio::Application::type_vec_files &files,
 
         std::cout << "Opening file: '" << filename << "'\n";
 
-        auto window = new Gtk::ApplicationWindow;
-        auto session = new Session(filename);
-        session->show_all();
-        window->add(*session);
-        window->set_title(session->get_title());
+        auto window = new Window(filename);
         window->show_all();
 
-        add_window(*window);
+        add_window(*static_cast<Gtk::Window*>(window));
     }
 }
