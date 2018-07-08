@@ -154,6 +154,7 @@ void Session::init_ui()
     scroll->add(editor); 
     pack_start(*scroll);
 
+    // Session //
     title = document.file->get_basename();
 }
 
@@ -161,3 +162,54 @@ std::string Session::get_title() const
 {
     return title;
 }
+
+float Session::get_zoom_factor() const
+{
+    return zoom_factor;
+}
+
+void Session::set_zoom_factor(float factor)
+{
+    zoom_factor = factor;
+    update_editor_size();
+    editor.queue_draw();
+}
+
+void Session::zoom_in()
+{
+    zoom_factor *= 1.5;
+    update_editor_size();
+    editor.queue_draw();
+}
+
+void Session::zoom_out()
+{
+    zoom_factor /= 1.5;
+    update_editor_size();
+    editor.queue_draw();
+}
+
+bool Session::get_show_grid() const
+{
+    return show_grid;
+}
+
+void Session::set_show_grid(bool state)
+{
+    show_grid = state;
+    editor.queue_draw();
+}
+
+bool Session::toggle_show_grid()
+{
+    show_grid = !show_grid;
+    editor.queue_draw();
+    return show_grid;
+}
+
+Session::Mode Session::get_mode() const
+{
+    return mode;
+}
+
+

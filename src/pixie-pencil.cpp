@@ -2,7 +2,7 @@
 #include <iostream>
 
 #include "pixie-rect.hpp"
-#include "pixie-sprite-editor.hpp"
+#include "pixie-session.hpp"
 
 #include "pixie-pencil.hpp"
 
@@ -16,13 +16,14 @@ Pencil::Pencil(int size, Tip tip) :
 
 }
 
-void Pencil::activate(GdkEvent *event, SpriteEditor &editor)
+void Pencil::activate(GdkEvent *event, Session &session)
 {
 
 }
 
-void Pencil::draw_cursor(const RefPtr<Context> &cr, SpriteEditor &editor)
+void Pencil::draw_cursor(const RefPtr<Context> &cr, Session &session)
 {
+    /*
     float zoom_factor = editor.get_zoom_factor();
     RectF sprite_bounds = editor.get_sprite_bounds();
     RectF pixel_bounds = editor.get_selected_pixel_bounds();
@@ -47,6 +48,7 @@ void Pencil::draw_cursor(const RefPtr<Context> &cr, SpriteEditor &editor)
 
         default: break;
     }
+    */
 }
 
 Gtk::Toolbar *Pencil::get_toolbar()

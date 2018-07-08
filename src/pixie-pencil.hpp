@@ -14,8 +14,8 @@ public:
 
     Pencil(int size = 1, Tip tip = Square);
 
-    void activate(GdkEvent *event, SpriteEditor &editor) override;
-    void draw_cursor(const RefPtr<Context> &cr, SpriteEditor &editor) override;
+    void activate(GdkEvent *event, Session &session) override;
+    void draw_cursor(const RefPtr<Context> &cr, Session &session) override;
     Gtk::Toolbar *get_toolbar() override;
 
     int get_size() const;
