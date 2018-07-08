@@ -1,3 +1,7 @@
+#include <gtkmm/toolitem.h>
+#include <gtkmm/adjustment.h>
+#include <gtkmm/spinbutton.h>
+
 #include <cmath>
 #include <iostream>
 
@@ -8,13 +12,6 @@
 
 using namespace Cairo;
 using namespace Pixie;
-
-Pencil::Pencil(int size, Tip tip) :
-    size(size),
-    tip(tip)
-{
-
-}
 
 void Pencil::activate(GdkEvent *event, Session &session)
 {
@@ -27,6 +24,8 @@ void Pencil::draw_cursor(const RefPtr<Context> &cr, Session &session)
     RectF sprite_bounds = session.get_sprite_bounds();
     RectF pixel_bounds = session.get_selected_pixel_bounds();
     Coord pixel = session.get_selected_pixel_coord();
+    Tip tip = session.get_tip();
+    int size = session.get_size();
 
     switch (tip) {
         case Square: {
@@ -49,28 +48,27 @@ void Pencil::draw_cursor(const RefPtr<Context> &cr, Session &session)
     }
 }
 
+/*
 Gtk::Toolbar *Pencil::get_toolbar()
 {
-    return nullptr;
-}
+    Gtk::Toolbar *toolbar = new Gtk::Toolbar;
+    Gtk::ToolItem *item = nullptr;
 
-int Pencil::get_size() const
-{
-    return size;
-}
+    // Size SpinButton //
+    item = Gtk::manage(new Gtk::ToolItem);
+    auto adj = Gtk::Adjustment::create(
+        size, // value
+        1.0,  // lower bound
+        50.0, // upper bound
+        1.0,  // step increment
+        5.0,  // page increment
+        0.0); // page size
+    auto spin_button = Gtk::manage(new Gtk::SpinButton(adj));
+    item->set_tooltip_text("size");
+    item->add(*spin_button);
+    toolbar->append(*item);
 
-void Pencil::set_size(int size)
-{
-    this->size = size;
+    return toolbar;
 }
-
-Pencil::Tip Pencil::get_tip() const
-{
-    return tip;
-}
-
-void Pencil::set_tip(Tip tip)
-{
-    this->tip = tip;
-}
+*/
 

@@ -15,7 +15,6 @@ public:
     virtual ~Tool() {};
     virtual void activate(GdkEvent *event, Session &session) = 0;
     virtual void draw_cursor(const RefPtr<Context> &cr, Session &session) = 0;
-    virtual Gtk::Toolbar *get_toolbar() = 0;
 };
 
 }

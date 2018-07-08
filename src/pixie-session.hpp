@@ -11,10 +11,11 @@
 
 namespace Pixie {
 
+enum Tip { Square, Diamond };
+enum Mode { Sprite, Animation, Tile };
+
 class Session : public Gtk::Box {
 public:
-    enum Mode { Sprite, Animation, Tile };
-
     Session(const std::string &filename);
     Session(Document&& document);
     ~Session();
@@ -29,6 +30,9 @@ public:
     bool get_show_grid() const;
     void set_show_grid(bool state);
     bool toggle_show_grid();
+
+    Tip get_tip() const;
+    int get_size() const;
 
     Mode get_mode() const;
 
@@ -55,6 +59,9 @@ private:
 
     Coord cursor_coord = Coord(-1, -1);
     Coord selected_pixel = Coord(-1, -1);
+
+    Tip tip = Square;
+    int size = 1;
 
     float zoom_factor = 10.0;
     float min_padding = 100.0;

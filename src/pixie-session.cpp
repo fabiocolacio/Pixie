@@ -1,5 +1,9 @@
 #include <gdkmm/general.h>
 #include <gtkmm/scrolledwindow.h>
+#include <gtkmm/toolbar.h>
+#include <gtkmm/adjustment.h>
+#include <gtkmm/toolitem.h>
+#include <gtkmm/spinbutton.h>
 
 #include "pixie-pencil.hpp"
 #include "pixie-session.hpp"
@@ -8,12 +12,14 @@ using namespace Cairo;
 using namespace Pixie;
 
 Session::Session(const std::string &filename) :
+    Box(Gtk::ORIENTATION_VERTICAL),
     document(Document(filename))
 {
     init();
 }
 
 Session::Session(Document&& document) :
+    Box(Gtk::ORIENTATION_VERTICAL),
     document(std::move(document))
 {
     init();
@@ -29,8 +35,29 @@ Session::~Session()
 void Session::init()
 {
     // Tools //
-    tools.push_back(new Pencil); 
-    tool = tools[0];
+    tools.push_back(new Pencil);
+
+    // Toolbar //
+    {
+        Gtk::Toolbar *toolbar = Gtk::manage(new Gtk::Toolbar);
+        Gtk::ToolItem *item = nullptr;
+
+        // Size SpinButton //
+        item = Gtk::manage(new Gtk::ToolItem);
+        auto adj = Gtk::Adjustment::create(
+            size, // value
+            1.0,  // lower bound
+            50.0, // upper bound
+            1.0,  // step increment
+            5.0,  // page increment
+            0.0); // page size
+        auto spin_button = Gtk::manage(new Gtk::SpinButton(adj));
+        item->set_tooltip_text("size");
+        item->add(*spin_button);
+        toolbar->append(*item);
+        
+        pack_start(*toolbar, false, true);
+    }
 
     // Editor //
     editor.set_can_focus(true);
@@ -245,7 +272,17 @@ bool Session::toggle_show_grid()
     return show_grid;
 }
 
-Session::Mode Session::get_mode() const
+Tip Session::get_tip() const
+{
+    return tip;
+}
+
+int Session::get_size() const
+{
+    return size;
+}
+
+Mode Session::get_mode() const
 {
     return mode;
 }
