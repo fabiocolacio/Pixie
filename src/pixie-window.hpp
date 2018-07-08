@@ -3,6 +3,7 @@
 
 #include <gtkmm/applicationwindow.h>
 #include <gtkmm/application.h>
+#include <gtkmm/headerbar.h>
 
 #include <string>
 
@@ -19,6 +20,9 @@ private:
     void init();
 
     Session session;
+
+    Gtk::HeaderBar *header_bar = nullptr;
+    Gtk::Box header_box;
 };
 
 }

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkPopoverMenu" id="window_menu">
+    <child>
+      <object class="GtkBox" id="window_menu_vbox">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <property name="margin">8</property>
+        
+        <!-- Zoom Controls -->
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
+            <property name="homogeneous">True</property>
+            <style>
+              <class name="linked"/>
+            </style>
+            <child>
+              <object class="GtkButton" id="zoom_out_btn">
+                <property name="visible">True</property>
+                <property name="action_name">win.zoomout</property>
+                <property name="tooltip-text" translatable="yes">Zoom Out</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="icon-name">zoom-out-symbolic</property>
+                    <property name="icon-size">1</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="zoom_original_btn">
+                <property name="visible">True</property>
+                <property name="action_name">win.zoomoriginal</property>
+                <property name="tooltip-text" translatable="yes">Zoom Reset</property>
+                <property name="label"></property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="zoom_in_btn">
+                <property name="visible">True</property>
+                <property name="action_name">win.zoomin</property>
+                <property name="tooltip-text" translatable="yes">Zoom In</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="icon-name">zoom-in-symbolic</property>
+                    <property name="icon-size">1</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+      </object>
+     </child>
+  </object>
+</interface>

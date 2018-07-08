@@ -21,6 +21,7 @@ public:
     ~Session();
 
     std::string get_title() const;
+    std::string get_subtitle() const;
 
     float get_zoom_factor() const;
     void set_zoom_factor(float factor);

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  
+  <object class="GtkImage" id="open-menu">
+    <property name="icon_name">open-menu-symbolic</property>
+    <property name="icon_size">2</property>
+  </object>
+  <object class="GtkImage" id="restore-view">
+    <property name="icon_name">view-restore-symbolic</property>
+    <property name="icon_size">2</property>
+  </object>
+  
+  <!-- Header Bar -->
+  <object class="GtkHeaderBar" id="header_bar">
+    <property name="visible">True</property>
+    
+    <!-- Open Buttons -->
+    <child>
+      <object class="GtkButtonBox" id="open_button_box">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="layout_style">expand</property>
+        <child>
+          <object class="GtkButton">
+            <property name="label" translatable="yes">Open</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="tooltip_text">open</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+            <property name="non_homogeneous">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkMenuButton" id="recent_menu_button">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="icon_name">pan-down-symbolic</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+            <property name="non_homogeneous">True</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="pack_type">start</property>
+      </packing>
+    </child>
+    
+    <child>
+      <object class="GtkButton" id="unfullscreen_btn">
+        <property name="visible">False</property>
+        <property name="image">restore-view</property>
+      </object>
+      <packing>
+        <property name="pack_type">end</property>
+      </packing>
+    </child>
+    
+    <child>
+      <object class="GtkMenuButton" id="menu_btn">
+        <property name="visible">True</property>
+        <property name="image">open-menu</property>
+      </object>
+      <packing>
+        <property name="pack_type">end</property>
+      </packing>
+    </child>
+    
+    <child>
+      <object class="GtkButton" id="save_btn">
+        <property name="visible">True</property>
+        <property name="label">Save</property>
+      </object>
+      <packing>
+        <property name="pack_type">end</property>
+      </packing>
+    </child>
+    
+  </object>
+</interface>

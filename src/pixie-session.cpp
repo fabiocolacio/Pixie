@@ -56,6 +56,7 @@ void Session::init()
         auto spin_button = Gtk::manage(new Gtk::SpinButton(adj));
         spin_button->set_tooltip_text("size");
         item->add(*spin_button);
+        item->show_all();
         toolbar->append(*item);
 
         // Tip Combobox //
@@ -66,9 +67,11 @@ void Session::init()
         combo_box->set_active(0);
         combo_box->set_tooltip_text("tip");
         item->add(*combo_box);
+        item->show_all();
         toolbar->append(*item);
         
         item = Gtk::manage(new Gtk::SeparatorToolItem);
+        item->show_all();
         toolbar->append(*item);
 
         // Mode ComboBox //
@@ -80,9 +83,11 @@ void Session::init()
         combo_box->set_active(0);
         combo_box->set_tooltip_text("editor mode");
         item->add(*combo_box);
+        item->show_all();
         toolbar->append(*item);
-       
+    
         toolbar->set_show_arrow(true);
+        toolbar->show();
         pack_start(*toolbar, false, true);
     }
 
@@ -99,10 +104,12 @@ void Session::init()
         .connect(sigc::mem_fun(*this, &Session::editor_event));
     editor.signal_draw()
         .connect(sigc::mem_fun(*this, &Session::editor_draw));
+    editor.show();
 
     // Scrolled Window //
     auto scroll = Gtk::manage(new Gtk::ScrolledWindow());
-    scroll->add(editor); 
+    scroll->add(editor);
+    scroll->show();
     pack_start(*scroll);
 
     // Session //
@@ -253,6 +260,11 @@ bool Session::editor_event(GdkEvent *event)
 std::string Session::get_title() const
 {
     return title;
+}
+
+std::string Session::get_subtitle() const
+{
+    return document.file->get_parent()->get_path();
 }
 
 float Session::get_zoom_factor() const

@@ -39,7 +39,7 @@ void Application::on_open(const Gio::Application::type_vec_files &files,
         std::cout << "Opening file: '" << filename << "'\n";
 
         auto window = new Window(filename);
-        window->show_all();
+        window->show();
 
         add_window(*static_cast<Gtk::Window*>(window));
     }
