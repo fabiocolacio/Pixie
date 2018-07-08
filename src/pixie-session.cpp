@@ -1,6 +1,7 @@
 #include <gdkmm/general.h>
 #include <gtkmm/scrolledwindow.h>
 
+#include "pixie-pencil.hpp"
 #include "pixie-session.hpp"
 
 using namespace Cairo;
@@ -9,13 +10,50 @@ using namespace Pixie;
 Session::Session(const std::string &filename) :
     document(Document(filename))
 {
-    init_ui();
+    init();
 }
 
 Session::Session(Document&& document) :
     document(std::move(document))
 {
-    init_ui();
+    init();
+}
+
+Session::~Session()
+{
+    for (Tool *t : tools) {
+        delete t;
+    }
+}
+
+void Session::init()
+{
+    // Tools //
+    tools.push_back(new Pencil); 
+    tool = tools[0];
+
+    // Editor //
+    editor.set_can_focus(true);
+    editor.set_focus_on_click(true);
+    update_editor_size();
+    editor.add_events(
+        Gdk::KEY_PRESS_MASK |
+        Gdk::BUTTON_PRESS_MASK |
+        Gdk::BUTTON_RELEASE_MASK |
+        Gdk::POINTER_MOTION_MASK);
+    editor.signal_event()
+        .connect(sigc::mem_fun(*this, &Session::editor_event));
+    editor.signal_draw()
+        .connect(sigc::mem_fun(*this, &Session::editor_draw));
+
+    // Scrolled Window //
+    auto scroll = Gtk::manage(new Gtk::ScrolledWindow());
+    scroll->add(editor); 
+    pack_start(*scroll);
+
+    // Session //
+    title = document.file->get_basename();
+    editor.grab_focus();
 }
 
 void Session::update_editor_size()
@@ -102,6 +140,11 @@ bool Session::editor_draw(const RefPtr<Context> &cr)
         cr->stroke();
     }
 
+    // Render Cursor
+    if (tool != nullptr) {
+        tool->draw_cursor(cr, *this);
+    }
+
     return false;
 }
 
@@ -109,6 +152,24 @@ bool Session::editor_event(GdkEvent *event)
 {
     switch (event->type) {
         case GDK_KEY_PRESS: {
+            switch (event->key.keyval) {
+                case GDK_KEY_g: {
+                    toggle_show_grid();
+                    break;
+                }
+
+                case GDK_KEY_plus: {
+                    zoom_in();
+                    break;
+                }
+
+                case GDK_KEY_minus: {
+                    zoom_out();
+                    break;
+                }
+
+                default: break;
+            }
             break;
         }
 
@@ -133,29 +194,6 @@ bool Session::editor_event(GdkEvent *event)
     editor.queue_draw();
 
     return false;
-}
-
-void Session::init_ui()
-{
-    // Editor //
-    update_editor_size();
-    editor.add_events(
-        Gdk::KEY_PRESS_MASK |
-        Gdk::BUTTON_PRESS_MASK |
-        Gdk::BUTTON_RELEASE_MASK |
-        Gdk::POINTER_MOTION_MASK);
-    editor.signal_event()
-        .connect(sigc::mem_fun(*this, &Session::editor_event));
-    editor.signal_draw()
-        .connect(sigc::mem_fun(*this, &Session::editor_draw));
-
-    // Scrolled Window //
-    auto scroll = Gtk::manage(new Gtk::ScrolledWindow());
-    scroll->add(editor); 
-    pack_start(*scroll);
-
-    // Session //
-    title = document.file->get_basename();
 }
 
 std::string Session::get_title() const

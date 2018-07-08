@@ -23,11 +23,10 @@ void Pencil::activate(GdkEvent *event, Session &session)
 
 void Pencil::draw_cursor(const RefPtr<Context> &cr, Session &session)
 {
-    /*
-    float zoom_factor = editor.get_zoom_factor();
-    RectF sprite_bounds = editor.get_sprite_bounds();
-    RectF pixel_bounds = editor.get_selected_pixel_bounds();
-    Coord pixel = editor.get_selected_pixel_coord();
+    float zoom_factor = session.get_zoom_factor();
+    RectF sprite_bounds = session.get_sprite_bounds();
+    RectF pixel_bounds = session.get_selected_pixel_bounds();
+    Coord pixel = session.get_selected_pixel_coord();
 
     switch (tip) {
         case Square: {
@@ -48,7 +47,6 @@ void Pencil::draw_cursor(const RefPtr<Context> &cr, Session &session)
 
         default: break;
     }
-    */
 }
 
 Gtk::Toolbar *Pencil::get_toolbar()

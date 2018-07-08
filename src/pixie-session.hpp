@@ -4,6 +4,7 @@
 #include <gtkmm/box.h>
 #include <gtkmm/drawingarea.h>
 
+#include "pixie-tool.hpp"
 #include "pixie-rectf.hpp"
 #include "pixie-coord.hpp"
 #include "pixie-document.hpp"
@@ -16,6 +17,7 @@ public:
 
     Session(const std::string &filename);
     Session(Document&& document);
+    ~Session();
 
     std::string get_title() const;
 
@@ -35,7 +37,7 @@ public:
     Coord get_selected_pixel_coord() const;
 
 private:
-    void init_ui();
+    void init();
 
     void update_editor_size();
     bool editor_draw(const Cairo::RefPtr<Cairo::Context> &cr);
@@ -43,6 +45,9 @@ private:
 
     Document document;
     std::string title = "Untitled Document";
+
+    Tool *tool = nullptr;
+    std::vector<Tool*> tools;
 
     Mode mode = Sprite;
     int sprite_index = 0;
