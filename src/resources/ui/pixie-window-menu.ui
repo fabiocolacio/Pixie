@@ -286,7 +286,8 @@
           <object class="GtkModelButton">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="text" translatable="yes">Enter Fullscreen</property>
+            <property name="text" translatable="yes">Fullscreen</property>
+            <property name="action-name">win.fullscreen</property>
           </object>
         </child>
         

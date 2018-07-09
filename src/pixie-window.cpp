@@ -45,6 +45,12 @@ void Window::init()
         app->set_accel_for_action("win.showgrid", "<Ctrl>g");
         add_action(action);
 
+        action = Gio::SimpleAction::create_bool("fullscreen", false);
+        action->signal_change_state().connect(
+            sigc::mem_fun(*this, &Window::fullscreen_action_state_changed));
+        app->set_accel_for_action("win.fullscreen", "F11");
+        add_action(action);
+
         action = Gio::SimpleAction::create("about");
         action->signal_activate().connect(
             sigc::mem_fun(*this, &Window::about_action_activated));
@@ -80,7 +86,9 @@ void Window::init()
     menu_button->set_direction(Gtk::ARROW_DOWN);
 
     session.show();
-    add(session);
+    content_box.pack_end(session);
+    content_box.show();
+    add(content_box);
     set_default_size(600, 600);
 }
 
@@ -122,6 +130,26 @@ void Window::showgrid_action_state_changed(const Glib::VariantBase &state)
     bool value;
     state.store(&value);
     session.set_show_grid(value);
+}
+
+void Window::fullscreen_action_state_changed(const Glib::VariantBase &state)
+{
+    Glib::RefPtr<Gio::SimpleAction> action = 
+        Glib::RefPtr<Gio::SimpleAction>::cast_dynamic(lookup_action("fullscreen"));
+    action->set_state(state);
+
+    bool value;
+    state.store(&value);
+    if (value) {
+        header_box.remove(*header_bar);
+        content_box.pack_start(*header_bar, false, true);
+        fullscreen();
+    }
+    else {
+        content_box.remove(*header_bar);
+        header_box.pack_start(*header_bar, false, true);
+        unfullscreen();
+    }
 }
 
 bool Window::on_delete_event(GdkEventAny *event)

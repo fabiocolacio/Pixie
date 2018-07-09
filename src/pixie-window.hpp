@@ -21,14 +21,14 @@ private:
 
     bool on_delete_event(GdkEventAny *event) override;
 
-    void open_action_activated(const Glib::VariantBase &param);
+    void open_action_activated(const Glib::VariantBase &param); // added
     void save_action_activated(const Glib::VariantBase &param);
     void new_window_action_activated(const Glib::VariantBase &param);
     void save_as_action_activated(const Glib::VariantBase &param);
     void export_action_activated(const Glib::VariantBase &param);
     void print_action_activated(const Glib::VariantBase &param);
-    void showgrid_action_state_changed(const Glib::VariantBase &state);
-    void fullscreen_action_state_changed(const Glib::VariantBase &state);
+    void showgrid_action_state_changed(const Glib::VariantBase &state); // added
+    void fullscreen_action_state_changed(const Glib::VariantBase &state); // added
     void rotate_left_action_activated(const Glib::VariantBase &param);
     void rotate_right_action_activated(const Glib::VariantBase &param);
     void rotate_action_activated(const Glib::VariantBase &param);
@@ -40,13 +40,14 @@ private:
     void convolution_action_activated(const Glib::VariantBase &param);
     void preferences_action_activated(const Glib::VariantBase &param);
     void keyboard_shortcuts_action_activated(const Glib::VariantBase &param);
-    void about_action_activated(const Glib::VariantBase &param);
+    void about_action_activated(const Glib::VariantBase &param); // added
     void quit_action_activated(const Glib::VariantBase &param);
 
     Session session;
 
+    Gtk::Box content_box = Gtk::Box(Gtk::ORIENTATION_VERTICAL);
     Gtk::HeaderBar *header_bar = nullptr;
-    Gtk::Box header_box;
+    Gtk::Box header_box = Gtk::Box(Gtk::ORIENTATION_VERTICAL);
 };
 
 }
