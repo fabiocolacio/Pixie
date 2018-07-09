@@ -214,16 +214,6 @@ bool Session::editor_event(GdkEvent *event)
     switch (event->type) {
         case GDK_KEY_PRESS: {
             switch (event->key.keyval) {
-                case GDK_KEY_plus: {
-                    zoom_in();
-                    break;
-                }
-
-                case GDK_KEY_minus: {
-                    zoom_out();
-                    break;
-                }
-
                 default: break;
             }
             break;
@@ -277,6 +267,14 @@ void Session::set_zoom_factor(float factor)
 void Session::zoom_in()
 {
     zoom_factor *= 1.5;
+    update_editor_size();
+    editor.queue_draw();
+}
+
+// TODO: Actually make zoom to show the whole image
+void Session::zoom_fit()
+{
+    zoom_factor = 10.0;
     update_editor_size();
     editor.queue_draw();
 }

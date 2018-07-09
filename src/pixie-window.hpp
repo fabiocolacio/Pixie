@@ -21,6 +21,9 @@ private:
 
     bool on_delete_event(GdkEventAny *event) override;
 
+    void zoomin_action_activated(const Glib::VariantBase &param); // added
+    void zoomfit_action_activated(const Glib::VariantBase &param); // added
+    void zoomout_action_activated(const Glib::VariantBase &param); // added
     void open_action_activated(const Glib::VariantBase &param); // added
     void save_action_activated(const Glib::VariantBase &param);
     void new_window_action_activated(const Glib::VariantBase &param);

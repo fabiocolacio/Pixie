@@ -33,6 +33,24 @@ void Window::init()
         g_assert(app);
         Glib::RefPtr<Gio::SimpleAction> action;
 
+        action = Gio::SimpleAction::create("zoomin");
+        action->signal_activate().connect(
+            sigc::mem_fun(*this, &Window::zoomin_action_activated));
+        app->set_accel_for_action("win.zoomin", "<Ctrl>plus");
+        add_action(action);
+
+        action = Gio::SimpleAction::create("zoomfit");
+        action->signal_activate().connect(
+            sigc::mem_fun(*this, &Window::zoomfit_action_activated));
+        app->set_accel_for_action("win.zoomfit", "<Ctrl>equal");
+        add_action(action);
+
+        action = Gio::SimpleAction::create("zoomout");
+        action->signal_activate().connect(
+            sigc::mem_fun(*this, &Window::zoomout_action_activated));
+        app->set_accel_for_action("win.zoomout", "<Ctrl>minus");
+        add_action(action);
+
         action = Gio::SimpleAction::create("open");
         action->signal_activate().connect(
             sigc::mem_fun(*this, &Window::open_action_activated));
@@ -90,6 +108,21 @@ void Window::init()
     content_box.show();
     add(content_box);
     set_default_size(600, 600);
+}
+
+void Window::zoomout_action_activated(const Glib::VariantBase &param)
+{
+    session.zoom_out();    
+}
+
+void Window::zoomfit_action_activated(const Glib::VariantBase &param)
+{
+    session.zoom_fit();    
+}
+
+void Window::zoomin_action_activated(const Glib::VariantBase &param)
+{
+    session.zoom_in();    
 }
 
 void Window::open_action_activated(const Glib::VariantBase &param)

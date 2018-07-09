@@ -26,6 +26,7 @@ public:
     float get_zoom_factor() const;
     void set_zoom_factor(float factor);
     void zoom_in();
+    void zoom_fit();
     void zoom_out();
 
     bool get_show_grid() const;
