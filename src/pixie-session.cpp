@@ -3,9 +3,10 @@
 #include <gtkmm/toolbar.h>
 #include <gtkmm/adjustment.h>
 #include <gtkmm/toolitem.h>
-#include <gtkmm/spinbutton.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/separatortoolitem.h>
+
+#include <iostream>
 
 #include "pixie-pencil.hpp"
 #include "pixie-session.hpp"
@@ -38,6 +39,7 @@ void Session::init()
 {
     // Tools //
     tools.push_back(new Pencil);
+    tool = tools[0];
 
     // Toolbar //
     {
@@ -53,9 +55,11 @@ void Session::init()
             1.0,  // step increment
             5.0,  // page increment
             0.0); // page size
-        auto spin_button = Gtk::manage(new Gtk::SpinButton(adj));
-        spin_button->set_tooltip_text("size");
-        item->add(*spin_button);
+        size_spin_button = Gtk::manage(new Gtk::SpinButton(adj));
+        size_spin_button->set_tooltip_text("size");
+        size_spin_button->signal_value_changed().connect(
+            sigc::mem_fun(*this, &Session::size_value_changed));
+        item->add(*size_spin_button);
         item->show_all();
         toolbar->append(*item);
 
@@ -242,6 +246,11 @@ bool Session::editor_event(GdkEvent *event)
     return false;
 }
 
+void Session::size_value_changed()
+{
+    set_size(size_spin_button->get_value_as_int());
+}
+
 std::string Session::get_title() const
 {
     return title;
@@ -312,6 +321,11 @@ Tip Session::get_tip() const
 int Session::get_size() const
 {
     return size;
+}
+
+void Session::set_size(int size)
+{
+    this->size = size;
 }
 
 Mode Session::get_mode() const

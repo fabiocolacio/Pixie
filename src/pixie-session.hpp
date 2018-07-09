@@ -3,6 +3,7 @@
 
 #include <gtkmm/box.h>
 #include <gtkmm/drawingarea.h>
+#include <gtkmm/spinbutton.h>
 
 #include "pixie-tool.hpp"
 #include "pixie-rectf.hpp"
@@ -34,7 +35,9 @@ public:
     bool toggle_show_grid();
 
     Tip get_tip() const;
+
     int get_size() const;
+    void set_size(int size);
 
     Mode get_mode() const;
 
@@ -49,11 +52,15 @@ private:
     bool editor_draw(const Cairo::RefPtr<Cairo::Context> &cr);
     bool editor_event(GdkEvent *event);
 
+    void size_value_changed();
+
     Document document;
     std::string title = "Untitled Document";
 
     Tool *tool = nullptr;
     std::vector<Tool*> tools;
+
+    Gtk::SpinButton *size_spin_button = nullptr;
 
     Mode mode = Sprite;
     int sprite_index = 0;
@@ -67,7 +74,7 @@ private:
 
     float zoom_factor = 10.0;
     float min_padding = 100.0;
-    bool show_grid = true;
+    bool show_grid = false;
 
     Gtk::DrawingArea editor;
 };

@@ -31,7 +31,10 @@ void Pencil::draw_cursor(const RefPtr<Context> &cr, Session &session)
         case Square: {
             cr->set_source_rgba(0.0, 0.0, 0.0, 1.0);
             cr->set_line_width(0.5);
-            cr->rectangle(pixel_bounds.x(), pixel_bounds.y(), pixel_bounds.width(), pixel_bounds.height());
+            cr->rectangle(
+                pixel_bounds.x() - std::floor(size / 2) * zoom_factor,
+                pixel_bounds.y() - std::floor(size / 2) * zoom_factor,
+                size * zoom_factor, size * zoom_factor);
             cr->stroke();
             break;
         }
