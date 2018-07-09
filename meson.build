@@ -14,7 +14,6 @@ res = gnome.compile_resources(
 
 src = [
     'src/pixie.cpp',
-    'src/pixie-application.cpp',
     'src/pixie-window.cpp',
     'src/pixie-session.cpp',
     'src/pixie-pencil.cpp',

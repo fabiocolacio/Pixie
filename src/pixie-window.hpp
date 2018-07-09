@@ -44,7 +44,6 @@ private:
     void about_action_activated(const Glib::VariantBase &param);
     void quit_action_activated(const Glib::VariantBase &param);
 
-
     Session session;
 
     Gtk::HeaderBar *header_bar = nullptr;
