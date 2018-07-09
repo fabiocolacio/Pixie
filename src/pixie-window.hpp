@@ -27,7 +27,7 @@ private:
     void save_as_action_activated(const Glib::VariantBase &param);
     void export_action_activated(const Glib::VariantBase &param);
     void print_action_activated(const Glib::VariantBase &param);
-    void show_grid_action_state_changed(const Glib::VariantBase &state);
+    void showgrid_action_state_changed(const Glib::VariantBase &state);
     void fullscreen_action_state_changed(const Glib::VariantBase &state);
     void rotate_left_action_activated(const Glib::VariantBase &param);
     void rotate_right_action_activated(const Glib::VariantBase &param);

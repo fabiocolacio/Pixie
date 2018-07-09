@@ -4,6 +4,7 @@
 #include <gtkmm/menubutton.h>
 #include <gtkmm/popover.h>
 #include <gtkmm/filechooserdialog.h>
+#include <gtkmm/aboutdialog.h>
 #include <giomm/simpleaction.h>
 
 #include <iostream>
@@ -36,6 +37,17 @@ void Window::init()
         action->signal_activate().connect(
             sigc::mem_fun(*this, &Window::open_action_activated));
         app->set_accel_for_action("win.open", "<Ctrl>o");
+        add_action(action);
+
+        action = Gio::SimpleAction::create_bool("showgrid", session.get_show_grid());
+        action->signal_change_state().connect(
+            sigc::mem_fun(*this, &Window::showgrid_action_state_changed));
+        app->set_accel_for_action("win.showgrid", "<Ctrl>g");
+        add_action(action);
+
+        action = Gio::SimpleAction::create("about");
+        action->signal_activate().connect(
+            sigc::mem_fun(*this, &Window::about_action_activated));
         add_action(action);
     }
 
@@ -90,6 +102,28 @@ void Window::open_action_activated(const Glib::VariantBase &param)
     }
 }
 
+void Window::about_action_activated(const Glib::VariantBase &param)
+{
+    Gtk::AboutDialog dialog;
+    dialog.set_program_name("Pixie");
+    dialog.set_version(PIXIE_VERSION);
+    dialog.set_website(PIXIE_WEBSITE);
+    dialog.set_authors({ "Fabio Colacio" });
+    dialog.set_transient_for(*this);
+    dialog.run();
+}
+
+void Window::showgrid_action_state_changed(const Glib::VariantBase &state)
+{
+    Glib::RefPtr<Gio::SimpleAction> action = 
+        Glib::RefPtr<Gio::SimpleAction>::cast_dynamic(lookup_action("showgrid"));
+    action->set_state(state);
+
+    bool value;
+    state.store(&value);
+    session.set_show_grid(value);
+}
+
 bool Window::on_delete_event(GdkEventAny *event)
 {
     if (auto app = get_application())
@@ -97,3 +131,4 @@ bool Window::on_delete_event(GdkEventAny *event)
     delete this;
     return false;
 }
+

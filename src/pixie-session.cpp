@@ -214,11 +214,6 @@ bool Session::editor_event(GdkEvent *event)
     switch (event->type) {
         case GDK_KEY_PRESS: {
             switch (event->key.keyval) {
-                case GDK_KEY_g: {
-                    toggle_show_grid();
-                    break;
-                }
-
                 case GDK_KEY_plus: {
                     zoom_in();
                     break;

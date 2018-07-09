@@ -187,6 +187,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="text" translatable="yes">About</property>
+                <property name="action-name">win.about</property>
               </object>
             </child>
             
@@ -277,6 +278,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="text" translatable="yes">Show Grid</property>
+            <property name="action-name">win.showgrid</property>
           </object>
         </child>
         

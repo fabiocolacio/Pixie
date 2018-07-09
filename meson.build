@@ -1,5 +1,9 @@
 project('Pixie', 'c', 'cpp',
-    default_options: [ 'cpp_std=c++11' ])
+    default_options: [ 'cpp_std=c++11' ],
+    version: '0.0.0')
+
+PIXIE_REPO = 'https://github.com/fabiocolacio/Pixie'
+PIXIE_WEBSITE = 'https://github.com/fabiocolacio/Pixie'
 
 ID = 'com.github.fabiocolacio.pixie'
 EXECUTABLE_NAME = 'pixie'
@@ -32,6 +36,13 @@ deps = [
     dependency('glibmm-2.4'),
     dependency('sigc++-2.0')
 ]
+
+add_global_arguments(
+    '-DPIXIE_VERSION="@0@"'.format(meson.project_version()),
+    '-DPIXIE_REPO="@0@"'.format(PIXIE_REPO),
+    '-DPIXIE_WEBSITE="@0@"'.format(PIXIE_WEBSITE),
+    language: 'cpp'
+)
 
 executable(
     EXECUTABLE_NAME,
