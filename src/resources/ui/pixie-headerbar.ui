@@ -27,6 +27,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <property name="action-name">win.open</property>
             <property name="tooltip_text">open</property>
           </object>
           <packing>

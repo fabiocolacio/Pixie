@@ -44,3 +44,4 @@ void Application::on_open(const Gio::Application::type_vec_files &files,
         add_window(*static_cast<Gtk::Window*>(window));
     }
 }
+

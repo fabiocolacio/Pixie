@@ -3,6 +3,10 @@
 #include <gtkmm/buttonbox.h>
 #include <gtkmm/menubutton.h>
 #include <gtkmm/popover.h>
+#include <gtkmm/filechooserdialog.h>
+#include <giomm/simpleaction.h>
+
+#include <iostream>
 
 #include "pixie-window.hpp"
 
@@ -21,8 +25,20 @@ Window::Window(const std::string &filename, const Glib::RefPtr<Gtk::Application>
     init();
 }
 
+Window::~Window()
+{
+
+}
+
 void Window::init()
 {
+    // Actions //
+    Glib::RefPtr<Gio::SimpleAction> action;
+    action = Gio::SimpleAction::create("open");
+    action->signal_activate().connect(
+        sigc::mem_fun(*this, &Window::open_action_activated));
+    add_action(action);
+
     auto builder = Gtk::Builder::create();
 
     // Header Bar //
@@ -56,3 +72,26 @@ void Window::init()
     set_default_size(600, 600);
 }
 
+void Window::open_action_activated(const Glib::VariantBase &param)
+{
+    auto file_chooser = Gtk::FileChooserDialog(*this, "Open a Sprite");
+    file_chooser.set_select_multiple(true);
+    file_chooser.get_header_bar()->set_show_close_button(false);
+    file_chooser.add_button("Cancel", 0);
+    file_chooser.add_button("Open", 1);
+    file_chooser.set_default_response(1);
+
+    if (file_chooser.run()) {
+        auto files = file_chooser.get_filenames();
+        for (auto name : files) {
+            auto window = new Window(name);
+            get_application()->add_window(*window);
+            window->show();
+        }
+    }
+}
+
+bool Window::on_delete_event(GdkEventAny *any_event)
+{
+    delete this;
+}
