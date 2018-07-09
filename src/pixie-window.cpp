@@ -12,12 +12,6 @@
 
 using namespace Pixie;
 
-Window::Window(const std::string &filename) :
-    session(filename)
-{
-    init();
-}
-
 Window::Window(const std::string &filename, const Glib::RefPtr<Gtk::Application> &app) :
     Gtk::ApplicationWindow(app),
     session(filename)
@@ -33,13 +27,17 @@ Window::~Window()
 void Window::init()
 {
     // Actions //
-    auto app = this->get_application();
-    Glib::RefPtr<Gio::SimpleAction> action;
-    action = Gio::SimpleAction::create("open");
-    action->signal_activate().connect(
-        sigc::mem_fun(*this, &Window::open_action_activated));
-    if (app) app->set_accel_for_action("win.open", "<Ctrl>o");
-    add_action(action);
+    {
+        auto app = this->get_application();
+        g_assert(app);
+        Glib::RefPtr<Gio::SimpleAction> action;
+
+        action = Gio::SimpleAction::create("open");
+        action->signal_activate().connect(
+            sigc::mem_fun(*this, &Window::open_action_activated));
+        app->set_accel_for_action("win.open", "<Ctrl>o");
+        add_action(action);
+    }
 
     auto builder = Gtk::Builder::create();
 
