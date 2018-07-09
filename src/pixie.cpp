@@ -4,6 +4,10 @@
 
 #include "pixie-window.hpp"
 
+#include "pixie.hpp"
+
+namespace Pixie {
+
 Glib::RefPtr<Gtk::Application> app =
     Gtk::Application::create("com.github.fabiocolacio.Pixie", Gio::APPLICATION_HANDLES_OPEN);
 
@@ -14,14 +18,15 @@ void open(const Gio::Application::type_vec_files &files, const Glib::ustring &hi
 
         std::cout << "Opening file: '" << filename << "'\n";
 
-        auto window = new Pixie::Window(filename, app);
+        auto window = new Window(filename, app);
         window->show();
     }
 }
 
-int main(int argc, char *argv[]) {
-    app->signal_open().connect(sigc::ptr_fun(&open));
+}
 
-    return app->run(argc, argv);
+int main(int argc, char *argv[]) {
+    Pixie::app->signal_open().connect(sigc::ptr_fun(&Pixie::open));
+    return Pixie::app->run(argc, argv);
 }
 
