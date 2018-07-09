@@ -42,7 +42,35 @@ void Pencil::draw_cursor(const RefPtr<Context> &cr, Session &session)
         case Diamond: {
             cr->set_source_rgba(0.0, 0.0, 0.0, 1.0);
             cr->set_line_width(0.5);
-            cr->rectangle(pixel_bounds.x(), pixel_bounds.y(), pixel_bounds.width(), pixel_bounds.height());
+
+            for (int r = 0; r < size; r++) {
+                RectF rect(
+                        pixel_bounds.left() - r * zoom_factor,
+                        pixel_bounds.top() - (size - r - 1) * zoom_factor,
+                        (1 + (r * 2)) * zoom_factor,
+                        (1 + (size - r - 1) * 2) * zoom_factor);
+                
+                cr->move_to(rect.left(), rect.top());
+                cr->rel_line_to(0, zoom_factor);
+                cr->move_to(rect.left(), rect.top());
+                cr->rel_line_to(zoom_factor, 0);
+
+                cr->move_to(rect.right(), rect.top());
+                cr->rel_line_to(0, zoom_factor);
+                cr->move_to(rect.right(), rect.top());
+                cr->rel_line_to(-zoom_factor, 0);
+                
+                cr->move_to(rect.left(), rect.bottom());
+                cr->rel_line_to(0, -zoom_factor);
+                cr->move_to(rect.left(), rect.bottom());
+                cr->rel_line_to(zoom_factor, 0);
+
+                cr->move_to(rect.right(), rect.bottom());
+                cr->rel_line_to(0, -zoom_factor);
+                cr->move_to(rect.right(), rect.bottom());
+                cr->rel_line_to(-zoom_factor, 0);
+            }
+
             cr->stroke();
             break;
         }

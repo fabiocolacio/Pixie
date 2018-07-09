@@ -353,5 +353,6 @@ std::string Pixie::tip_as_string(Tip tip) {
         case Square: return "Square";
         case Diamond: return "Diamond";
         case Circle: return "Circle";
+        default: return "";
     }
 }

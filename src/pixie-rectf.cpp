@@ -100,3 +100,8 @@ RectF RectF::operator-(const CoordF &c) const
 {
     return RectF( tl - c, br - c);
 }
+
+std::ostream &Pixie::operator<<(std::ostream &stream, const RectF &coord)
+{
+    return stream << "[" << coord.tl << ", " << coord.br << "]";
+}

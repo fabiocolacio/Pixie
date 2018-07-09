@@ -32,3 +32,7 @@ CoordF CoordF::operator/(float scalar) const
     return { x / scalar, y / scalar };
 }
 
+std::ostream &Pixie::operator<<(std::ostream &stream, const CoordF &coord)
+{
+    return stream << "(" << coord.x << ", " << coord.y << ")";
+}

@@ -1,6 +1,8 @@
 #ifndef __PIXIE_RECTF_HPP__
 #define __PIXIE_RECTF_HPP__
 
+#include <ostream>
+
 #include "pixie-coord.hpp"
 #include "pixie-rect.hpp"
 #include "pixie-coordf.hpp"
@@ -38,6 +40,8 @@ struct RectF {
     RectF operator+(const CoordF &c) const;
     RectF operator-(const CoordF &c) const;
 };
+
+std::ostream &operator<<(std::ostream &o, const RectF &c);
 
 }
 
