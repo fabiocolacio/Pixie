@@ -4,6 +4,7 @@
 #include <gtkmm/box.h>
 #include <gtkmm/drawingarea.h>
 #include <gtkmm/spinbutton.h>
+#include <gtkmm/comboboxtext.h>
 
 #include "pixie-tool.hpp"
 #include "pixie-rectf.hpp"
@@ -12,7 +13,7 @@
 
 namespace Pixie {
 
-enum Tip { Square, Diamond };
+enum Tip { Square, Diamond, Circle, NTips };
 enum Mode { Sprite, Animation, Tile };
 
 class Session : public Gtk::Box {
@@ -35,6 +36,7 @@ public:
     bool toggle_show_grid();
 
     Tip get_tip() const;
+    void set_tip(Tip tip);
 
     int get_size() const;
     void set_size(int size);
@@ -53,6 +55,7 @@ private:
     bool editor_event(GdkEvent *event);
 
     void size_value_changed();
+    void tip_combo_box_changed();
 
     Document document;
     std::string title = "Untitled Document";
@@ -61,6 +64,7 @@ private:
     std::vector<Tool*> tools;
 
     Gtk::SpinButton *size_spin_button = nullptr;
+    Gtk::ComboBoxText *tip_combo_box = nullptr;
 
     Mode mode = Sprite;
     int sprite_index = 0;
@@ -78,6 +82,8 @@ private:
 
     Gtk::DrawingArea editor;
 };
+
+std::string tip_as_string(Tip tip);
 
 }
 

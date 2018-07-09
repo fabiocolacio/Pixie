@@ -3,7 +3,6 @@
 #include <gtkmm/toolbar.h>
 #include <gtkmm/adjustment.h>
 #include <gtkmm/toolitem.h>
-#include <gtkmm/comboboxtext.h>
 #include <gtkmm/separatortoolitem.h>
 
 #include <iostream>
@@ -65,12 +64,15 @@ void Session::init()
 
         // Tip Combobox //
         item = Gtk::manage(new Gtk::ToolItem);
-        auto combo_box = Gtk::manage(new Gtk::ComboBoxText);
-        combo_box->append("Square");
-        combo_box->append("Diamond");
-        combo_box->set_active(0);
-        combo_box->set_tooltip_text("tip");
-        item->add(*combo_box);
+        tip_combo_box = Gtk::manage(new Gtk::ComboBoxText);
+        for (int i = 0; i < static_cast<int>(NTips); i++) {
+            tip_combo_box->append(tip_as_string(static_cast<Tip>(i)));
+        }
+        tip_combo_box->set_active(0);
+        tip_combo_box->set_tooltip_text("tip");
+        tip_combo_box->signal_changed().connect(
+            sigc::mem_fun(*this, &Session::tip_combo_box_changed));
+        item->add(*tip_combo_box);
         item->show_all();
         toolbar->append(*item);
         
@@ -80,7 +82,7 @@ void Session::init()
 
         // Mode ComboBox //
         item = Gtk::manage(new Gtk::ToolItem);
-        combo_box = Gtk::manage(new Gtk::ComboBoxText);
+        auto combo_box = Gtk::manage(new Gtk::ComboBoxText);
         combo_box->append("Sprite Mode");
         combo_box->append("Animation Mode");
         combo_box->append("Tile Mode");
@@ -251,6 +253,14 @@ void Session::size_value_changed()
     set_size(size_spin_button->get_value_as_int());
 }
 
+void Session::tip_combo_box_changed()
+{ 
+    int row = tip_combo_box->get_active_row_number();
+    if (row >= 0) {
+        set_tip(static_cast<Tip>(row));
+    }
+}
+
 std::string Session::get_title() const
 {
     return title;
@@ -318,6 +328,11 @@ Tip Session::get_tip() const
     return tip;
 }
 
+void Session::set_tip(Tip tip)
+{
+    this->tip = tip;
+}
+
 int Session::get_size() const
 {
     return size;
@@ -333,4 +348,10 @@ Mode Session::get_mode() const
     return mode;
 }
 
-
+std::string Pixie::tip_as_string(Tip tip) {
+    switch (tip) {
+        case Square: return "Square";
+        case Diamond: return "Diamond";
+        case Circle: return "Circle";
+    }
+}
