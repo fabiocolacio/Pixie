@@ -69,7 +69,372 @@
             </child>
           </object>
         </child>
+        
+        <!-- Menu Items -->
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            
+            <child>
+              <object class="GtkSeparator">
+                <property name="visible">True</property>
+                <property name="orientation">horizontal</property>
+                <property name="margin-top">6</property>
+                <property name="margin-bottom">6</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkModelButton">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="text" translatable="yes">New Window</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkSeparator">
+                <property name="visible">True</property>
+                <property name="orientation">horizontal</property>
+                <property name="margin-top">6</property>
+                <property name="margin-bottom">6</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkModelButton">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="text" translatable="yes">File</property>
+                <property name="menu-name">document</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkModelButton">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="text" translatable="yes">View</property>
+                <property name="menu-name">view</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkSeparator">
+                <property name="visible">True</property>
+                <property name="orientation">horizontal</property>
+                <property name="margin-top">6</property>
+                <property name="margin-bottom">6</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkModelButton">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="text" translatable="yes">Transform</property>
+                <property name="menu-name">transform</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkModelButton">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="text" translatable="yes">Filter</property>
+                <property name="menu-name">filter</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkSeparator">
+                <property name="visible">True</property>
+                <property name="orientation">horizontal</property>
+                <property name="margin-top">6</property>
+                <property name="margin-bottom">6</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkModelButton" id="preferences_button">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="text" translatable="yes">Preferences</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkSeparator">
+                <property name="visible">True</property>
+                <property name="orientation">horizontal</property>
+                <property name="margin-top">6</property>
+                <property name="margin-bottom">6</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkModelButton" id="keyboard_shortcuts_button">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="text" translatable="yes">Keyboard Shortcuts</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkModelButton" id="about_button">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="text" translatable="yes">About</property>
+              </object>
+            </child>
+            
+            <child>
+              <object class="GtkModelButton" id="quit_button">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="text" translatable="yes">Quit</property>
+              </object>
+            </child>
+            
+          </object>
+        </child>
+        
       </object>
      </child>
+     
+      <!-- File Submenu -->
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="margin">8</property>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">File</property>
+            <property name="inverted">True</property>
+            <property name="menu-name">main</property>
+            <property name="centered">True</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">Save As...</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">Export...</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">Print...</property>
+          </object>
+        </child>
+        
+      </object>
+      <packing>
+        <property name="submenu">document</property>
+      </packing>
+    </child>
+     
+     <!-- View Submenu -->
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="margin">8</property>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">View</property>
+            <property name="inverted">True</property>
+            <property name="menu-name">main</property>
+            <property name="centered">True</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">Show Grid</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">Enter Fullscreen</property>
+          </object>
+        </child>
+        
+      </object>
+      <packing>
+        <property name="submenu">view</property>
+      </packing>
+    </child>
+     
+     <!-- Transform Submenu -->
+     <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="margin">8</property>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">Transform</property>
+            <property name="inverted">True</property>
+            <property name="menu-name">main</property>
+            <property name="centered">True</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">Rotate 90° Left</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">Rotate 90° Right</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">Rotate...</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
+            <property name="margin-top">6</property>
+            <property name="margin-bottom">6</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">Scale...</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
+            <property name="margin-top">6</property>
+            <property name="margin-bottom">6</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">Custom...</property>
+          </object>
+        </child>
+        
+      </object>
+      <packing>
+        <property name="submenu">transform</property>
+      </packing>
+    </child>
+    
+    
+    
+    <!-- Filter Submenu -->
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="margin">8</property>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">Filter</property>
+            <property name="inverted">True</property>
+            <property name="menu-name">main</property>
+            <property name="centered">True</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">Grayscale</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">Invert</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">Blur...</property>
+          </object>
+        </child>
+        
+        <child>
+          <object class="GtkModelButton">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="text" translatable="yes">Convolution...</property>
+          </object>
+        </child>
+        
+      </object>
+      <packing>
+        <property name="submenu">filter</property>
+      </packing>
+    </child>
+    
   </object>
 </interface>
