@@ -395,6 +395,16 @@ void Session::set_size(int size)
     this->size = size;
 }
 
+RGBA Session::get_color() const
+{
+    return RGBA(color_button->get_rgba());
+}
+
+void Session::set_color(RGBA color)
+{
+    color_button->set_rgba(color.to_gdk_rgba());
+}
+
 Mode Session::get_mode() const
 {
     return mode;

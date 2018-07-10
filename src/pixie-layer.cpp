@@ -1,3 +1,5 @@
+#include <cstdio>
+
 #include "pixie-layer.hpp"
 
 using namespace Pixie;
@@ -44,7 +46,10 @@ void Layer::set_pixel(int x, int y, RGBA color)
     guchar *pixel = pixbuf->get_pixels() +
         x * n_channels + y * rowstride;
 
-    uint32_t data = color.to_uint32_t(); 
-    memcpy(pixel, &data, n_channels);
+    pixel[0] = color.red;
+    pixel[1] = color.green;
+    pixel[2] = color.blue;
+    if (n_channels > 3)
+        pixel[3] = color.alpha;
 }
 

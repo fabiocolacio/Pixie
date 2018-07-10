@@ -27,7 +27,7 @@ void Pencil::activate(GdkEvent *event, Session &session)
             case SquareTip: {
                 for (int x = pixel.x-(size/2); x < pixel.x+(size%2)+(size/2); x++) {
                     for (int y = pixel.y-(size/2); y < pixel.y+(size%2)+(size/2); y++) {
-                        layer.set_pixel(x, y, RGBA(0x00000000)); 
+                        layer.set_pixel(x, y, session.get_color()); 
                     }
                 }
                 break;
@@ -36,7 +36,7 @@ void Pencil::activate(GdkEvent *event, Session &session)
             case DiamondTip: {
                 for (int x = pixel.x-size, r = size; x < pixel.x + size; x++) {
                     for (int y = pixel.y-size+r+1; y < pixel.y+size-r; y++) {
-                        layer.set_pixel(x, y, RGBA(0x00000000));
+                        layer.set_pixel(x, y, session.get_color());
                     }
 
                     if (x < pixel.x) {
