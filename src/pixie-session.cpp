@@ -230,7 +230,9 @@ bool Session::editor_event(GdkEvent *event)
                 case LeftMouseButton: lmb = true; break;
                 case RightMouseButton: rmb = true; break;
                 case MiddleMouseButton: mmb = true; break;
+                default: break; 
             }
+            break;
         }
 
         case GDK_BUTTON_RELEASE: {
