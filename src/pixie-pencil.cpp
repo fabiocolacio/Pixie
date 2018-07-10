@@ -25,7 +25,11 @@ void Pencil::activate(GdkEvent *event, Session &session)
 
         switch (tip) {
             case SquareTip: {
-                
+                for (int x = pixel.x-(size/2); x < pixel.x+(size%2)+(size/2); x++) {
+                    for (int y = pixel.y-(size/2); y < pixel.y+(size%2)+(size/2); y++) {
+                        layer.set_pixel(x, y, { 0, 0, 0, 0 }); 
+                    }
+                }
                 break;
             }
 
