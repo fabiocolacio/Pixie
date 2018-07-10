@@ -15,6 +15,7 @@ public:
     const Glib::RefPtr<Gdk::Pixbuf> &get_pixbuf() const;
 
     RGBA get_pixel(int x, int y) const;
+    void set_pixel(int x, int y, RGBA color);
 
 private:
     Glib::RefPtr<Gdk::Pixbuf> pixbuf;
