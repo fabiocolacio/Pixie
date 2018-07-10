@@ -114,3 +114,7 @@ void Pencil::draw_cursor(const RefPtr<Context> &cr, Session &session)
     }
 }
 
+Gtk::ToolButton *Pencil::get_toolbutton()
+{
+    return nullptr;
+}

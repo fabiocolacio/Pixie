@@ -2,7 +2,7 @@
 #define __PIXIE_TOOL_HPP__
 
 #include <cairomm/context.h>
-#include <gtkmm/toolbar.h>
+#include <gtkmm/toolbutton.h>
 
 using namespace Cairo;
 
@@ -15,6 +15,7 @@ public:
     virtual ~Tool() {};
     virtual void activate(GdkEvent *event, Session &session) = 0;
     virtual void draw_cursor(const RefPtr<Context> &cr, Session &session) = 0;
+    virtual Gtk::ToolButton *get_toolbutton() = 0;
 };
 
 }
