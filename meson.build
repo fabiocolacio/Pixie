@@ -27,6 +27,7 @@ src = [
     'src/pixie-window.cpp',
     'src/pixie-session.cpp',
     'src/pixie-pencil.cpp',
+    'src/pixie-eraser.cpp',
     'src/pixie-rgba.cpp',
     'src/pixie-coord.cpp',
     'src/pixie-coordf.cpp',

@@ -53,6 +53,10 @@ void Session::init()
         item->show_all();
         toolbox->append(*item);
 
+        item = Gtk::manage(eraser.get_toolbutton());
+        item->show_all();
+        toolbox->append(*item);
+
         gtk_orientable_set_orientation(
             GTK_ORIENTABLE(toolbox->gobj()),
             GTK_ORIENTATION_VERTICAL);
