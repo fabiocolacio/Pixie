@@ -348,6 +348,16 @@ Mode Session::get_mode() const
     return mode;
 }
 
+Sprite &Session::get_active_sprite()
+{
+    return document.sprites[sprite_index];
+}
+
+Layer &Session::get_active_layer()
+{
+    return document.sprites[sprite_index][layer_index];
+}
+
 std::string Pixie::tip_as_string(Tip tip) {
     switch (tip) {
         case SquareTip: return "Square";
@@ -356,3 +366,4 @@ std::string Pixie::tip_as_string(Tip tip) {
         default: return "";
     }
 }
+
