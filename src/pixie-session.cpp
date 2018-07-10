@@ -226,7 +226,11 @@ bool Session::editor_event(GdkEvent *event)
         }
 
         case GDK_BUTTON_PRESS: {
-            break;
+            switch (event->button.button) {
+                case LeftMouseButton: lmb = true; break;
+                case RightMouseButton: rmb = true; break;
+                case MiddleMouseButton: mmb = true; break;
+            }
         }
 
         case GDK_BUTTON_RELEASE: {
@@ -242,6 +246,8 @@ bool Session::editor_event(GdkEvent *event)
 
         default: break;
     }
+
+    if (tool) tool->activate(event, *this);
 
     editor.queue_draw();
 
@@ -356,6 +362,21 @@ Sprite &Session::get_active_sprite()
 Layer &Session::get_active_layer()
 {
     return document.sprites[sprite_index][layer_index];
+}
+
+bool Session::get_lmb() const
+{
+    return lmb;
+}
+
+bool Session::get_rmb() const
+{
+    return rmb;
+}
+
+bool Session::get_mmb() const
+{
+    return mmb;
 }
 
 std::string Pixie::tip_as_string(Tip tip) {

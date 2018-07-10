@@ -18,6 +18,12 @@ namespace Pixie {
 enum Tip { SquareTip, DiamondTip, CircleTip, NTips };
 enum Mode { SpriteMode, AnimationMode, TileMode };
 
+enum MouseButton {
+    LeftMouseButton = 1,
+    MiddleMouseButton = 2,
+    RightMouseButton = 3
+};
+
 class Session : public Gtk::Box {
 public:
     Session(const std::string &filename);
@@ -52,6 +58,10 @@ public:
     Pixie::Sprite &get_active_sprite();
     Pixie::Layer &get_active_layer();
 
+    bool get_lmb() const;
+    bool get_rmb() const;
+    bool get_mmb() const;
+
 private:
     void init();
 
@@ -84,6 +94,10 @@ private:
     float zoom_factor = 10.0;
     float min_padding = 100.0;
     bool show_grid = false;
+
+    bool lmb = false;
+    bool rmb = false;
+    bool mmb = false;
 
     Gtk::DrawingArea editor;
 };

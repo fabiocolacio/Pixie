@@ -15,7 +15,22 @@ using namespace Pixie;
 
 void Pencil::activate(GdkEvent *event, Session &session)
 {
+    float zoom_factor = session.get_zoom_factor();
+    RectF sprite_bounds = session.get_sprite_bounds();
+    RectF pixel_bounds = session.get_selected_pixel_bounds();
+    Coord pixel = session.get_selected_pixel_coord();
+    Tip tip = session.get_tip();
+    int size = session.get_size();
+    Layer layer = session.get_active_layer();
 
+    switch (tip) {
+        case SquareTip: {
+            
+            break;
+        }
+
+        default: break;
+    }
 }
 
 void Pencil::draw_cursor(const RefPtr<Context> &cr, Session &session)
