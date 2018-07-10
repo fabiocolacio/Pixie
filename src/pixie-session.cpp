@@ -3,6 +3,7 @@
 #include <gtkmm/toolbar.h>
 #include <gtkmm/adjustment.h>
 #include <gtkmm/toolitem.h>
+#include <gtkmm/toolbutton.h>
 #include <gtkmm/separatortoolitem.h>
 
 #include <iostream>
@@ -47,13 +48,17 @@ void Session::init()
     // Tool Box //
     {
         Gtk::Toolbar *toolbox = Gtk::manage(new Gtk::Toolbar);
-        Gtk::ToolItem *item = nullptr;
+        Gtk::ToolButton *item = nullptr;
 
-        item = Gtk::manage(pencil.get_toolbutton());
+        item = Gtk::manage(new Gtk::ToolButton);
+        item->set_icon_name("pixie-pencil-symbolic");
+        item->signal_clicked().connect([this]{ tool = &pencil; });
         item->show_all();
         toolbox->append(*item);
 
-        item = Gtk::manage(eraser.get_toolbutton());
+        item = Gtk::manage(new Gtk::ToolButton);
+        item->set_icon_name("pixie-eraser-symbolic");
+        item->signal_clicked().connect([this]{ tool = &eraser; });
         item->show_all();
         toolbox->append(*item);
 

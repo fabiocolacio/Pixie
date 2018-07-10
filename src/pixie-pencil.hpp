@@ -9,7 +9,6 @@ class Pencil : public Tool {
 public:
     void activate(GdkEvent *event, Session &session) override;
     void draw_cursor(const RefPtr<Context> &cr, Session &session) override;
-    Gtk::ToolButton *get_toolbutton() override;
 };
 
 }

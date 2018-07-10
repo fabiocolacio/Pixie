@@ -1,7 +1,3 @@
-#include <gtkmm/toolitem.h>
-#include <gtkmm/adjustment.h>
-#include <gtkmm/spinbutton.h>
-
 #include <cmath>
 #include <iostream>
 
@@ -114,9 +110,3 @@ void Pencil::draw_cursor(const RefPtr<Context> &cr, Session &session)
     }
 }
 
-Gtk::ToolButton *Pencil::get_toolbutton()
-{
-    auto button = new Gtk::ToolButton;
-    button->set_icon_name("pixie-pencil-symbolic");
-    return button;
-}
