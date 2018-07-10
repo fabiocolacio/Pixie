@@ -29,16 +29,37 @@ Session::Session(Document&& document) :
 
 Session::~Session()
 {
-    for (Tool *t : tools) {
-        delete t;
-    }
+
 }
 
 void Session::init()
 {
-    // Tools //
-    tools.push_back(new Pencil);
-    tool = tools[0];
+    // Set Current Tool //
+    tool = &pencil;
+
+    gtk_icon_theme_append_search_path (gtk_icon_theme_get_default(), ICONS_DIR);
+
+    auto hbox = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL));
+    auto vbox = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL));
+    hbox->show();
+    vbox->show();
+
+    // Tool Box //
+    {
+        Gtk::Toolbar *toolbox = Gtk::manage(new Gtk::Toolbar);
+        Gtk::ToolItem *item = nullptr;
+
+        item = Gtk::manage(pencil.get_toolbutton());
+        item->show_all();
+        toolbox->append(*item);
+
+        gtk_orientable_set_orientation(
+            GTK_ORIENTABLE(toolbox->gobj()),
+            GTK_ORIENTATION_VERTICAL);
+        toolbox->set_show_arrow(true);
+        toolbox->show();
+        hbox->pack_start(*toolbox, false, true);
+    }
 
     // Toolbar //
     {
@@ -103,7 +124,7 @@ void Session::init()
     
         toolbar->set_show_arrow(true);
         toolbar->show();
-        pack_start(*toolbar, false, true);
+        vbox->pack_start(*toolbar, false, true);
     }
 
     // Editor //
@@ -126,7 +147,9 @@ void Session::init()
     auto scroll = Gtk::manage(new Gtk::ScrolledWindow());
     scroll->add(editor);
     scroll->show();
-    pack_start(*scroll);
+    vbox->pack_start(*scroll);
+    hbox->pack_end(*vbox);
+    pack_start(*hbox);
 
     // Session //
     title = document.file->get_basename();

@@ -7,6 +7,7 @@
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/colorbutton.h>
 
+#include "pixie-pencil.hpp"
 #include "pixie-rgba.hpp"
 #include "pixie-tool.hpp"
 #include "pixie-rectf.hpp"
@@ -81,7 +82,7 @@ private:
     std::string title = "Untitled Document";
 
     Tool *tool = nullptr;
-    std::vector<Tool*> tools;
+    Pencil pencil;
 
     Gtk::SpinButton *size_spin_button = nullptr;
     Gtk::ComboBoxText *tip_combo_box = nullptr;

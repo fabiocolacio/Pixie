@@ -14,8 +14,6 @@ APP_DIR = join_paths(DATA_DIR, PIXIE_ID)
 ICONS_DIR = join_paths(APP_DIR, 'icons')
 APPDATA_DIR = join_paths(DATA_DIR, 'appdata')
 
-EXECUTABLE_NAME = 'marker'
-
 gnome = import('gnome')
 
 res = gnome.compile_resources(
@@ -51,6 +49,7 @@ add_global_arguments(
     '-DPIXIE_REPO="@0@"'.format(PIXIE_REPO),
     '-DPIXIE_WEBSITE="@0@"'.format(PIXIE_WEBSITE),
     '-DPIXIE_ID="@0@"'.format(PIXIE_ID),
+    '-DICONS_DIR="@0@"'.format(ICONS_DIR),
     language: 'cpp'
 )
 
