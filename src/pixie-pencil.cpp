@@ -19,32 +19,34 @@ void Pencil::activate(GdkEvent *event, Session &session)
         Tip tip = session.get_tip(); int size = session.get_size();
         Layer layer = session.get_active_layer();
 
-        switch (tip) {
-            case SquareTip: {
-                for (int x = pixel.x-(size/2); x < pixel.x+(size%2)+(size/2); x++) {
-                    for (int y = pixel.y-(size/2); y < pixel.y+(size%2)+(size/2); y++) {
-                        layer.set_pixel(x, y, session.get_color()); 
+        if (pixel.x >= 0 && pixel.y >= 0) {
+            switch (tip) {
+                case SquareTip: {
+                    for (int x = pixel.x-(size/2); x < pixel.x+(size%2)+(size/2); x++) {
+                        for (int y = pixel.y-(size/2); y < pixel.y+(size%2)+(size/2); y++) {
+                            layer.set_pixel(x, y, session.get_color()); 
+                        }
+                    }
+                    break;
+                }
+
+                case DiamondTip: {
+                    for (int x = pixel.x-size, r = size; x < pixel.x + size; x++) {
+                        for (int y = pixel.y-size+r+1; y < pixel.y+size-r; y++) {
+                            layer.set_pixel(x, y, session.get_color());
+                        }
+
+                        if (x < pixel.x) {
+                            r -= 1;
+                        }
+                        else {
+                            r += 1;
+                        }
                     }
                 }
-                break;
+
+                default: break;
             }
-
-            case DiamondTip: {
-                for (int x = pixel.x-size, r = size; x < pixel.x + size; x++) {
-                    for (int y = pixel.y-size+r+1; y < pixel.y+size-r; y++) {
-                        layer.set_pixel(x, y, session.get_color());
-                    }
-
-                    if (x < pixel.x) {
-                        r -= 1;
-                    }
-                    else {
-                        r += 1;
-                    }
-                }
-            }
-
-            default: break;
         }
     }
 }
@@ -58,55 +60,57 @@ void Pencil::draw_cursor(const RefPtr<Context> &cr, Session &session)
     Tip tip = session.get_tip();
     int size = session.get_size();
 
-    switch (tip) {
-        case SquareTip: {
-            cr->set_source_rgba(0.0, 0.0, 0.0, 1.0);
-            cr->set_line_width(0.5);
-            cr->rectangle(
-                pixel_bounds.x() - std::floor(size / 2) * zoom_factor,
-                pixel_bounds.y() - std::floor(size / 2) * zoom_factor,
-                size * zoom_factor, size * zoom_factor);
-            cr->stroke();
-            break;
-        }
-
-        case DiamondTip: {
-            cr->set_source_rgba(0.0, 0.0, 0.0, 1.0);
-            cr->set_line_width(0.5);
-
-            for (int r = 0; r < size; r++) {
-                RectF rect(
-                        pixel_bounds.left() - r * zoom_factor,
-                        pixel_bounds.top() - (size - r - 1) * zoom_factor,
-                        (1 + (r * 2)) * zoom_factor,
-                        (1 + (size - r - 1) * 2) * zoom_factor);
-                
-                cr->move_to(rect.left(), rect.top());
-                cr->rel_line_to(0, zoom_factor);
-                cr->move_to(rect.left(), rect.top());
-                cr->rel_line_to(zoom_factor, 0);
-
-                cr->move_to(rect.right(), rect.top());
-                cr->rel_line_to(0, zoom_factor);
-                cr->move_to(rect.right(), rect.top());
-                cr->rel_line_to(-zoom_factor, 0);
-                
-                cr->move_to(rect.left(), rect.bottom());
-                cr->rel_line_to(0, -zoom_factor);
-                cr->move_to(rect.left(), rect.bottom());
-                cr->rel_line_to(zoom_factor, 0);
-
-                cr->move_to(rect.right(), rect.bottom());
-                cr->rel_line_to(0, -zoom_factor);
-                cr->move_to(rect.right(), rect.bottom());
-                cr->rel_line_to(-zoom_factor, 0);
+    if (pixel.x >= 0 && pixel.y >= 0) {
+        switch (tip) {
+            case SquareTip: {
+                cr->set_source_rgba(0.0, 0.0, 0.0, 1.0);
+                cr->set_line_width(0.5);
+                cr->rectangle(
+                    pixel_bounds.x() - std::floor(size / 2) * zoom_factor,
+                    pixel_bounds.y() - std::floor(size / 2) * zoom_factor,
+                    size * zoom_factor, size * zoom_factor);
+                cr->stroke();
+                break;
             }
 
-            cr->stroke();
-            break;
-        }
+            case DiamondTip: {
+                cr->set_source_rgba(0.0, 0.0, 0.0, 1.0);
+                cr->set_line_width(0.5);
 
-        default: break;
+                for (int r = 0; r < size; r++) {
+                    RectF rect(
+                            pixel_bounds.left() - r * zoom_factor,
+                            pixel_bounds.top() - (size - r - 1) * zoom_factor,
+                            (1 + (r * 2)) * zoom_factor,
+                            (1 + (size - r - 1) * 2) * zoom_factor);
+                    
+                    cr->move_to(rect.left(), rect.top());
+                    cr->rel_line_to(0, zoom_factor);
+                    cr->move_to(rect.left(), rect.top());
+                    cr->rel_line_to(zoom_factor, 0);
+
+                    cr->move_to(rect.right(), rect.top());
+                    cr->rel_line_to(0, zoom_factor);
+                    cr->move_to(rect.right(), rect.top());
+                    cr->rel_line_to(-zoom_factor, 0);
+                    
+                    cr->move_to(rect.left(), rect.bottom());
+                    cr->rel_line_to(0, -zoom_factor);
+                    cr->move_to(rect.left(), rect.bottom());
+                    cr->rel_line_to(zoom_factor, 0);
+
+                    cr->move_to(rect.right(), rect.bottom());
+                    cr->rel_line_to(0, -zoom_factor);
+                    cr->move_to(rect.right(), rect.bottom());
+                    cr->rel_line_to(-zoom_factor, 0);
+                }
+
+                cr->stroke();
+                break;
+            }
+
+            default: break;
+        }
     }
 }
 
