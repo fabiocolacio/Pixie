@@ -1,4 +1,5 @@
 #include <cmath>
+#include <cstdio>
 
 #include "pixie-rgba.hpp"
 
@@ -6,7 +7,7 @@ using namespace Pixie;
 
 double byte_to_float(uint8_t b)
 {
-    return b / 255; 
+    return ((double) b) / 255.0;
 }
 
 uint8_t float_to_byte(double f)

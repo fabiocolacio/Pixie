@@ -22,7 +22,7 @@ const Glib::RefPtr<Gdk::Pixbuf> &Layer::get_pixbuf() const
 RGBA Layer::get_pixel(int x, int y) const
 {
     if (x < 0 || x >= pixbuf->get_width() ||
-        y < 0 || y >= pixbuf->get_width())
+        y < 0 || y >= pixbuf->get_height())
         return RGBA(0x00000000);
 
     int rowstride = pixbuf->get_rowstride();
@@ -31,13 +31,13 @@ RGBA Layer::get_pixel(int x, int y) const
     guchar *pixel = pixbuf->get_pixels() +
         x * n_channels + y * rowstride;
 
-    return RGBA(pixel[0], pixel[1], pixel[2], pixel[3]);
+    return RGBA(pixel[0], pixel[1], pixel[2], (n_channels > 3) ? pixel[3] : 0xff);
 }
 
 void Layer::set_pixel(int x, int y, RGBA color)
 {
     if (x < 0 || x >= pixbuf->get_width() ||
-        y < 0 || y >= pixbuf->get_width())
+        y < 0 || y >= pixbuf->get_height())
         return;
 
     int rowstride = pixbuf->get_rowstride();

@@ -55,7 +55,7 @@ void Session::init()
         item->set_group(group);
         item->show_all();
         toolbox->append(*item);
-        item->signal_clicked().connect([this](){ tool = &pencil; });
+        item->signal_clicked().connect([this]{ tool = &pencil; });
         tool = &pencil;
         item->set_active(true);
 
@@ -65,7 +65,15 @@ void Session::init()
         item->set_group(group);
         item->show_all();
         toolbox->append(*item);
-        item->signal_clicked().connect([this](){ tool = &eraser; });
+        item->signal_clicked().connect([this]{ tool = &eraser; });
+
+        item = Gtk::manage(new Gtk::RadioToolButton);
+        item->set_icon_name("pixie-color-sampler-symbolic");
+        item->set_tooltip_text("Color Sampler");
+        item->set_group(group);
+        item->show_all();
+        toolbox->append(*item);
+        item->signal_clicked().connect([this]{ tool = &color_sampler; });
 
         gtk_orientable_set_orientation(
             GTK_ORIENTABLE(toolbox->gobj()),

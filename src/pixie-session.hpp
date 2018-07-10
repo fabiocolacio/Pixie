@@ -7,6 +7,7 @@
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/colorbutton.h>
 
+#include "pixie-color-sampler.hpp"
 #include "pixie-eraser.hpp"
 #include "pixie-pencil.hpp"
 #include "pixie-rgba.hpp"
@@ -85,6 +86,7 @@ private:
     Tool *tool = nullptr;
     Pencil pencil;
     Eraser eraser;
+    ColorSampler color_sampler;
 
     Gtk::SpinButton *size_spin_button = nullptr;
     Gtk::ComboBoxText *tip_combo_box = nullptr;
