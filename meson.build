@@ -29,6 +29,7 @@ src = [
     'src/pixie-pencil.cpp',
     'src/pixie-eraser.cpp',
     'src/pixie-color-sampler.cpp',
+    'src/pixie-bomb.cpp',
     'src/pixie-rgba.cpp',
     'src/pixie-coord.cpp',
     'src/pixie-coordf.cpp',
