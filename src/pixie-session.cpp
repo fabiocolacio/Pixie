@@ -3,7 +3,8 @@
 #include <gtkmm/toolbar.h>
 #include <gtkmm/adjustment.h>
 #include <gtkmm/toolitem.h>
-#include <gtkmm/toolbutton.h>
+#include <gtkmm/radiotoolbutton.h>
+#include <gtkmm/radiobuttongroup.h>
 #include <gtkmm/separatortoolitem.h>
 
 #include <iostream>
@@ -48,17 +49,20 @@ void Session::init()
     // Tool Box //
     {
         Gtk::Toolbar *toolbox = Gtk::manage(new Gtk::Toolbar);
-        Gtk::ToolButton *item = nullptr;
+        Gtk::RadioToolButton *item = nullptr;
+        Gtk::RadioButtonGroup group;
 
-        item = Gtk::manage(new Gtk::ToolButton);
+        item = Gtk::manage(new Gtk::RadioToolButton);
         item->set_icon_name("pixie-pencil-symbolic");
         item->signal_clicked().connect([this]{ tool = &pencil; });
+        item->set_group(group);
         item->show_all();
         toolbox->append(*item);
 
-        item = Gtk::manage(new Gtk::ToolButton);
+        item = Gtk::manage(new Gtk::RadioToolButton);
         item->set_icon_name("pixie-eraser-symbolic");
         item->signal_clicked().connect([this]{ tool = &eraser; });
+        item->set_group(group);
         item->show_all();
         toolbox->append(*item);
 
