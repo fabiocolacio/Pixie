@@ -36,9 +36,6 @@ Session::~Session()
 
 void Session::init()
 {
-    // Set Current Tool //
-    tool = &pencil;
-
     gtk_icon_theme_append_search_path (gtk_icon_theme_get_default(), ICONS_DIR);
 
     auto hbox = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_HORIZONTAL));
@@ -55,18 +52,20 @@ void Session::init()
         item = Gtk::manage(new Gtk::RadioToolButton);
         item->set_icon_name("pixie-pencil-symbolic");
         item->set_tooltip_text("Pencil Tool");
-        item->signal_clicked().connect([this]{ tool = &pencil; });
         item->set_group(group);
         item->show_all();
         toolbox->append(*item);
+        item->signal_clicked().connect([this](){ tool = &pencil; });
+        tool = &pencil;
+        item->set_active(true);
 
         item = Gtk::manage(new Gtk::RadioToolButton);
         item->set_icon_name("pixie-eraser-symbolic");
         item->set_tooltip_text("Eraser Tool");
-        item->signal_clicked().connect([this]{ tool = &eraser; });
         item->set_group(group);
         item->show_all();
         toolbox->append(*item);
+        item->signal_clicked().connect([this](){ tool = &eraser; });
 
         gtk_orientable_set_orientation(
             GTK_ORIENTABLE(toolbox->gobj()),
