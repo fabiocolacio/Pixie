@@ -33,6 +33,21 @@ void Pencil::activate(GdkEvent *event, Session &session)
                 break;
             }
 
+            case DiamondTip: {
+                for (int x = pixel.x-size, r = size; x < pixel.x + size; x++) {
+                    for (int y = pixel.y-size+r+1; y < pixel.y+size-r; y++) {
+                        layer.set_pixel(x, y, { 0, 0, 0, 0 });
+                    }
+
+                    if (x < pixel.x) {
+                        r -= 1;
+                    }
+                    else {
+                        r += 1;
+                    }
+                }
+            }
+
             default: break;
         }
     }
