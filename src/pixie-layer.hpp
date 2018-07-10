@@ -3,6 +3,8 @@
 
 #include <gdkmm/pixbuf.h>
 
+#include "pixie-rgba.hpp"
+
 namespace Pixie {
 
 class Layer {
@@ -11,6 +13,8 @@ public:
 
     Glib::RefPtr<Gdk::Pixbuf> &get_pixbuf();
     const Glib::RefPtr<Gdk::Pixbuf> &get_pixbuf() const;
+
+    RGBA get_pixel(int x, int y) const;
 
 private:
     Glib::RefPtr<Gdk::Pixbuf> pixbuf;
