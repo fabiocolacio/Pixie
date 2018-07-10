@@ -105,6 +105,7 @@ void Session::init()
         Gdk::KEY_PRESS_MASK |
         Gdk::BUTTON_PRESS_MASK |
         Gdk::BUTTON_RELEASE_MASK |
+        Gdk::SCROLL_MASK |
         Gdk::POINTER_MOTION_MASK);
     editor.signal_event()
         .connect(sigc::mem_fun(*this, &Session::editor_event));
@@ -218,6 +219,17 @@ bool Session::editor_draw(const RefPtr<Context> &cr)
 bool Session::editor_event(GdkEvent *event)
 {
     switch (event->type) {
+        case GDK_SCROLL: {
+            if (event->scroll.state & Gdk::CONTROL_MASK) {
+                switch (event->scroll.direction) {
+                    case GDK_SCROLL_UP: zoom_in(); break;
+                    case GDK_SCROLL_DOWN: zoom_out(); break;
+                    default: break;
+                }
+            }
+            break;
+        }
+
         case GDK_KEY_PRESS: {
             switch (event->key.keyval) {
                 default: break;
@@ -291,7 +303,7 @@ float Session::get_zoom_factor() const
 
 void Session::set_zoom_factor(float factor)
 {
-    zoom_factor = factor;
+    zoom_factor = (factor >= 1.0) ? factor : 1.0;
     update_editor_size();
     editor.queue_draw();
 }
@@ -314,6 +326,8 @@ void Session::zoom_fit()
 void Session::zoom_out()
 {
     zoom_factor /= 1.5;
+    if (zoom_factor < 1.0)
+        zoom_factor = 1.0;
     update_editor_size();
     editor.queue_draw();
 }
