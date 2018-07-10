@@ -10,11 +10,13 @@
 #include "pixie-rectf.hpp"
 #include "pixie-coord.hpp"
 #include "pixie-document.hpp"
+#include "pixie-layer.hpp"
+#include "pixie-sprite.hpp"
 
 namespace Pixie {
 
-enum Tip { Square, Diamond, Circle, NTips };
-enum Mode { Sprite, Animation, Tile };
+enum Tip { SquareTip, DiamondTip, CircleTip, NTips };
+enum Mode { SpriteMode, AnimationMode, TileMode };
 
 class Session : public Gtk::Box {
 public:
@@ -47,6 +49,9 @@ public:
     RectF get_selected_pixel_bounds() const;
     Coord get_selected_pixel_coord() const;
 
+    Pixie::Sprite &get_active_sprite();
+    Pixie::Layer &get_active_layer();
+
 private:
     void init();
 
@@ -66,14 +71,14 @@ private:
     Gtk::SpinButton *size_spin_button = nullptr;
     Gtk::ComboBoxText *tip_combo_box = nullptr;
 
-    Mode mode = Sprite;
+    Mode mode = SpriteMode;
     int sprite_index = 0;
     int layer_index = 0;
 
     Coord cursor_coord = Coord(-1, -1);
     Coord selected_pixel = Coord(-1, -1);
 
-    Tip tip = Square;
+    Tip tip = SquareTip;
     int size = 1;
 
     float zoom_factor = 10.0;

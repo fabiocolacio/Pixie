@@ -28,7 +28,7 @@ void Pencil::draw_cursor(const RefPtr<Context> &cr, Session &session)
     int size = session.get_size();
 
     switch (tip) {
-        case Square: {
+        case SquareTip: {
             cr->set_source_rgba(0.0, 0.0, 0.0, 1.0);
             cr->set_line_width(0.5);
             cr->rectangle(
@@ -39,7 +39,7 @@ void Pencil::draw_cursor(const RefPtr<Context> &cr, Session &session)
             break;
         }
 
-        case Diamond: {
+        case DiamondTip: {
             cr->set_source_rgba(0.0, 0.0, 0.0, 1.0);
             cr->set_line_width(0.5);
 

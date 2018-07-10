@@ -350,9 +350,9 @@ Mode Session::get_mode() const
 
 std::string Pixie::tip_as_string(Tip tip) {
     switch (tip) {
-        case Square: return "Square";
-        case Diamond: return "Diamond";
-        case Circle: return "Circle";
+        case SquareTip: return "Square";
+        case DiamondTip: return "Diamond";
+        case CircleTip: return "Circle";
         default: return "";
     }
 }
