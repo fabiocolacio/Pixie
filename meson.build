@@ -5,8 +5,16 @@ project('Pixie', 'c', 'cpp',
 PIXIE_REPO = 'https://github.com/fabiocolacio/Pixie'
 PIXIE_WEBSITE = 'https://github.com/fabiocolacio/Pixie'
 
-ID = 'com.github.fabiocolacio.pixie'
+PIXIE_ID = 'com.github.fabiocolacio.pixie'
 EXECUTABLE_NAME = 'pixie'
+
+PREFIX = get_option('prefix')
+DATA_DIR = join_paths(PREFIX, 'share')
+APP_DIR = join_paths(DATA_DIR, PIXIE_ID)
+ICONS_DIR = join_paths(APP_DIR, 'icons')
+APPDATA_DIR = join_paths(DATA_DIR, 'appdata')
+
+EXECUTABLE_NAME = 'marker'
 
 gnome = import('gnome')
 
@@ -42,6 +50,7 @@ add_global_arguments(
     '-DPIXIE_VERSION="@0@"'.format(meson.project_version()),
     '-DPIXIE_REPO="@0@"'.format(PIXIE_REPO),
     '-DPIXIE_WEBSITE="@0@"'.format(PIXIE_WEBSITE),
+    '-DPIXIE_ID="@0@"'.format(PIXIE_ID),
     language: 'cpp'
 )
 
@@ -50,3 +59,9 @@ executable(
     sources: src,
     dependencies: deps
 )
+
+install_subdir(
+  'data/icons',
+  install_dir : APP_DIR
+)
+
