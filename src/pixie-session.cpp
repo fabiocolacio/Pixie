@@ -75,6 +75,15 @@ void Session::init()
         item->add(*tip_combo_box);
         item->show_all();
         toolbar->append(*item);
+
+        // Color Button //
+        item = Gtk::manage(new Gtk::ToolItem);
+        color_button = Gtk::manage(new Gtk::ColorButton(Gdk::RGBA("#000000")));
+        color_button->set_use_alpha(true);
+        color_button->set_alpha(0xffff);
+        item->add(*color_button);
+        item->show_all();
+        toolbar->append(*item);
         
         item = Gtk::manage(new Gtk::SeparatorToolItem);
         item->show_all();
@@ -219,6 +228,7 @@ bool Session::editor_draw(const RefPtr<Context> &cr)
 bool Session::editor_event(GdkEvent *event)
 {
     switch (event->type) {
+    
         case GDK_SCROLL: {
             if (event->scroll.state & Gdk::CONTROL_MASK) {
                 switch (event->scroll.direction) {
@@ -234,6 +244,11 @@ bool Session::editor_event(GdkEvent *event)
             switch (event->key.keyval) {
                 default: break;
             }
+            
+            cursor_coord = Coord(
+                event->button.x,
+                event->button.y);
+
             break;
         }
 
@@ -244,6 +259,11 @@ bool Session::editor_event(GdkEvent *event)
                 case MiddleMouseButton: mmb = true; break;
                 default: break; 
             }
+
+            cursor_coord = Coord(
+                event->button.x,
+                event->button.y);
+
             break;
         }
 
@@ -253,6 +273,11 @@ bool Session::editor_event(GdkEvent *event)
                 case RightMouseButton: rmb = false; break;
                 case MiddleMouseButton: mmb = false; break;
             }
+
+            cursor_coord = Coord(
+                event->button.x,
+                event->button.y);
+
             break;
         }
 

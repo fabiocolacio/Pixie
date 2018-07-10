@@ -5,7 +5,9 @@
 #include <gtkmm/drawingarea.h>
 #include <gtkmm/spinbutton.h>
 #include <gtkmm/comboboxtext.h>
+#include <gtkmm/colorbutton.h>
 
+#include "pixie-rgba.hpp"
 #include "pixie-tool.hpp"
 #include "pixie-rectf.hpp"
 #include "pixie-coord.hpp"
@@ -49,6 +51,9 @@ public:
     int get_size() const;
     void set_size(int size);
 
+    RGBA get_color() const;
+    void set_color(RGBA color);
+
     Mode get_mode() const;
 
     RectF get_sprite_bounds() const;
@@ -80,6 +85,7 @@ private:
 
     Gtk::SpinButton *size_spin_button = nullptr;
     Gtk::ComboBoxText *tip_combo_box = nullptr;
+    Gtk::ColorButton *color_button = nullptr;
 
     Mode mode = SpriteMode;
     int sprite_index = 0;

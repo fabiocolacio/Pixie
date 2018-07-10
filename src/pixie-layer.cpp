@@ -21,7 +21,7 @@ RGBA Layer::get_pixel(int x, int y) const
 {
     if (x < 0 || x >= pixbuf->get_width() ||
         y < 0 || y >= pixbuf->get_width())
-        return { 0, 0, 0, 0 };
+        return RGBA(0x00000000);
 
     int rowstride = pixbuf->get_rowstride();
     int n_channels = pixbuf->get_n_channels();
@@ -29,9 +29,7 @@ RGBA Layer::get_pixel(int x, int y) const
     guchar *pixel = pixbuf->get_pixels() +
         x * n_channels + y * rowstride;
 
-    RGBA color;
-    memcpy(&color, pixel, n_channels);
-    return color;
+    return RGBA(pixel[0], pixel[1], pixel[2], pixel[3]);
 }
 
 void Layer::set_pixel(int x, int y, RGBA color)
@@ -46,6 +44,7 @@ void Layer::set_pixel(int x, int y, RGBA color)
     guchar *pixel = pixbuf->get_pixels() +
         x * n_channels + y * rowstride;
 
-    memcpy(pixel, &color, n_channels);
+    uint32_t data = color.to_uint32_t(); 
+    memcpy(pixel, &data, n_channels);
 }
 
