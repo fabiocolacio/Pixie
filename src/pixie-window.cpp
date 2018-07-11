@@ -77,31 +77,34 @@ void Window::init()
 
     auto builder = Gtk::Builder::create();
 
-    // Header Bar //
-    set_titlebar(header_box);
-    builder->add_from_resource("/com/github/fabiocolacio/pixie/ui/pixie-headerbar.ui");
-    builder->get_widget("header_bar", header_bar);
-    header_bar->show();
-    header_bar->set_show_close_button(true);
-    header_bar->set_title(session.get_title());
-    header_bar->set_subtitle(session.get_subtitle());
-    header_box.show();
-    header_box.pack_start(*header_bar);
+    if (use_headerbar) {
+        // Header Bar //
+        set_titlebar(header_box);
+        builder->add_from_resource("/com/github/fabiocolacio/pixie/ui/pixie-headerbar.ui");
+        builder->get_widget("header_bar", header_bar);
+        header_bar->show();
+        header_bar->set_show_close_button(true);
+        header_bar->set_title(session.get_title());
+        header_bar->set_subtitle(session.get_subtitle());
+        header_box.show();
+        header_box.pack_start(*header_bar);
 
-    // Open Buttons //
-    Gtk::ButtonBox *button_box = nullptr;
-    builder->get_widget("open_button_box", button_box);
-    button_box->set_homogeneous(false);
+        // Open Buttons //
+        Gtk::ButtonBox *button_box = nullptr;
+        builder->get_widget("open_button_box", button_box);
+        button_box->set_homogeneous(false);
 
-    // Popover Menu //
-    builder->add_from_resource("/com/github/fabiocolacio/pixie/ui/pixie-window-menu.ui");
-    Gtk::MenuButton *menu_button = nullptr;
-    builder->get_widget("menu_btn", menu_button);
-    Gtk::Popover *window_menu = nullptr;
-    builder->get_widget("window_menu", window_menu);
-    menu_button->set_use_popover(true);
-    menu_button->set_popover(*window_menu);
-    menu_button->set_direction(Gtk::ARROW_DOWN);
+        // Popover Menu //
+        builder->add_from_resource("/com/github/fabiocolacio/pixie/ui/pixie-window-menu.ui");
+        Gtk::MenuButton *menu_button = nullptr;
+        builder->get_widget("menu_btn", menu_button);
+        Gtk::Popover *window_menu = nullptr;
+        builder->get_widget("window_menu", window_menu);
+        menu_button->set_use_popover(true);
+        menu_button->set_popover(*window_menu);
+        menu_button->set_direction(Gtk::ARROW_DOWN);
+    }
+
 
     session.show();
     content_box.pack_end(session);
@@ -174,13 +177,17 @@ void Window::fullscreen_action_state_changed(const Glib::VariantBase &state)
     bool value;
     state.store(&value);
     if (value) {
-        header_box.remove(*header_bar);
-        content_box.pack_start(*header_bar, false, true);
+        if (use_headerbar) {
+            header_box.remove(*header_bar);
+            content_box.pack_start(*header_bar, false, true);
+        }
         fullscreen();
     }
     else {
-        content_box.remove(*header_bar);
-        header_box.pack_start(*header_bar, false, true);
+        if (use_headerbar) {
+            content_box.remove(*header_bar);
+            header_box.pack_start(*header_bar, false, true);
+        }
         unfullscreen();
     }
 }

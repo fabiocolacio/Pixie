@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <menu id="menubar">
+    <section>
+      <item>
+        <attribute name="label">Open...</attribute>
+        <attribute name="action">win.open</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

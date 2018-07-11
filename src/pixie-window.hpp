@@ -48,6 +48,8 @@ private:
 
     Session session;
 
+    bool use_headerbar = false;
+
     Gtk::Box content_box = Gtk::Box(Gtk::ORIENTATION_VERTICAL);
     Gtk::HeaderBar *header_bar = nullptr;
     Gtk::Box header_box = Gtk::Box(Gtk::ORIENTATION_VERTICAL);
