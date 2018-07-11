@@ -154,7 +154,7 @@ void Session::init()
     
         toolbar->set_show_arrow(true);
         toolbar->show();
-        vbox->pack_start(*toolbar, false, true);
+        vbox->pack_start(*toolbar, Gtk::PACK_SHRINK);
     }
 
     // Editor //

@@ -5,7 +5,9 @@
 #include <gtkmm/popover.h>
 #include <gtkmm/filechooserdialog.h>
 #include <gtkmm/aboutdialog.h>
+#include <gtkmm/menubar.h>
 #include <giomm/simpleaction.h>
+#include <giomm/menumodel.h>
 
 #include <iostream>
 
@@ -104,7 +106,18 @@ void Window::init()
         menu_button->set_popover(*window_menu);
         menu_button->set_direction(Gtk::ARROW_DOWN);
     }
+    else {
+        // Menubar //
+        builder->add_from_resource("/com/github/fabiocolacio/pixie/ui/pixie-menubar.ui");
 
+        auto model = Glib::RefPtr<Gio::MenuModel>::cast_dynamic(
+            builder->get_object("menubar"));
+        auto menu_bar = Gtk::manage(new Gtk::MenuBar(model));
+        menu_bar->set_visible(true);
+        content_box.pack_start(*menu_bar, Gtk::PACK_SHRINK);
+
+        set_title(session.get_title());
+    }
 
     session.show();
     content_box.pack_end(session);
@@ -132,7 +145,8 @@ void Window::open_action_activated(const Glib::VariantBase &param)
 {
     auto file_chooser = Gtk::FileChooserDialog(*this, "Open a Sprite");
     file_chooser.set_select_multiple(true);
-    file_chooser.get_header_bar()->set_show_close_button(false);
+    if (auto bar = file_chooser.get_header_bar())
+        bar->set_show_close_button(false);
     file_chooser.add_button("Cancel", 0);
     file_chooser.add_button("Open", 1);
     file_chooser.set_default_response(1);

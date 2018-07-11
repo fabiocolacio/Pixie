@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <gresources>
     <gresource prefix="/com/github/fabiocolacio/pixie">
+      <file>ui/pixie-menubar.ui</file>
       <file>ui/pixie-window-menu.ui</file>
       <file>ui/pixie-headerbar.ui</file>
     </gresource>
