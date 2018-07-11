@@ -2,15 +2,190 @@
 <interface>
   <menu id="menubar">
     <section>
+
+      <!-- File Menu -->
       <submenu>
         <attribute name="label">File</attribute>
         <section>
           <item>
+            <attribute name="label">New...</attribute>
+            <attribute name="action">win.new</attribute>
+          </item>
+          <item>
             <attribute name="label">Open...</attribute>
             <attribute name="action">win.open</attribute>
           </item>
+          <submenu>
+            <attribute name="label">Open Recent</attribute>
+          </submenu>
+        </section>
+        <section>
+          <item>
+            <attribute name="label">Save</attribute>
+            <attribute name="action">win.save</attribute>
+          </item>
+          <item>
+            <attribute name="label">Save As...</attribute>
+            <attribute name="action">win.saveas</attribute>
+          </item>
+        </section>
+        <section>
+          <item>
+            <attribute name="label">Export...</attribute>
+            <attribute name="action">win.export</attribute>
+          </item>
+          <item>
+            <attribute name="label">Print...</attribute>
+            <attribute name="action">win.print</attribute>
+          </item>
+        </section>
+        <section>
+          <item>
+            <attribute name="label">Close</attribute>
+            <attribute name="action">win.close</attribute>
+          </item>
+          <item>
+            <attribute name="label">Quit</attribute>
+            <attribute name="action">app.quit</attribute>
+          </item>
         </section>
       </submenu>
+
+      <!-- Edit Menu -->
+      <submenu>
+        <attribute name="label">Edit</attribute>
+        <section>
+          <item>
+            <attribute name="label">Undo</attribute>
+            <attribute name="action">win.undo</attribute>
+          </item>
+          <item>
+            <attribute name="label">Redo</attribute>
+            <attribute name="action">win.redo</attribute>
+          </item>
+        </section>
+        <section>
+          <item>
+            <attribute name="label">Cut</attribute>
+            <attribute name="action">win.cut</attribute>
+          </item>
+          <item>
+            <attribute name="label">Copy</attribute>
+            <attribute name="action">win.copy</attribute>
+          </item>
+          <item>
+            <attribute name="label">Paste</attribute>
+            <attribute name="action">win.paste</attribute>
+          </item>
+        </section>
+        <section>
+          <item>
+            <attribute name="label">Preferences</attribute>
+            <attribute name="action">win.preferences</attribute>
+          </item>
+        </section>
+      </submenu>
+
+      <!-- View Menu -->
+      <submenu>
+        <attribute name="label">View</attribute>
+        <section>
+          <item>
+            <attribute name="label">Zoom In</attribute>
+            <attribute name="action">win.zoomin</attribute>
+          </item>
+          <item>
+            <attribute name="label">Zoom Out</attribute>
+            <attribute name="action">win.zoomout</attribute>
+          </item>
+          <item>
+            <attribute name="label">Zoom Fit</attribute>
+            <attribute name="action">win.zoomfit</attribute>
+          </item>
+        </section>
+        <section>
+          <item>
+            <attribute name="label">Show Grid</attribute>
+            <attribute name="action">win.showgrid</attribute>
+          </item>
+        </section>
+        <section>
+          <item>
+            <attribute name="label">Fullscreen</attribute>
+            <attribute name="action">win.fullscreen</attribute>
+          </item>
+        </section>
+      </submenu>
+
+      <!-- Transform Menu -->
+      <submenu>
+        <attribute name="label">Transform</attribute>
+        <section>
+          <item>
+            <attribute name="label">Rotate 90° Left</attribute>
+            <attribute name="action">win.rotateleft</attribute>
+          </item>
+          <item>
+            <attribute name="label">Rotate 90° Right</attribute>
+            <attribute name="action">win.rotateright</attribute>
+          </item>
+          <item>
+            <attribute name="label">Rotate...</attribute>
+            <attribute name="action">win.rotate</attribute>
+          </item>
+        </section>
+        <section>
+          <item>
+            <attribute name="label">Scale...</attribute>
+            <attribute name="action">win.scale</attribute>
+          </item>
+        </section>
+        <section>
+          <item>
+            <attribute name="label">Custom...</attribute>
+            <attribute name="action">win.transformcustom</attribute>
+          </item>
+        </section>
+      </submenu>
+
+      <!-- Filter Menu -->
+      <submenu>
+        <attribute name="label">Filter</attribute>
+        <section>
+          <item>
+            <attribute name="label">Grayscale</attribute>
+            <attribute name="action">win.grayscale</attribute>
+          </item>
+          <item>
+            <attribute name="label">Invert</attribute>
+            <attribute name="action">win.invert</attribute>
+          </item>
+          <item>
+            <attribute name="label">Blur...</attribute>
+            <attribute name="action">win.blur</attribute>
+          </item>
+          <item>
+            <attribute name="label">Convolution...</attribute>
+            <attribute name="action">win.convolution</attribute>
+          </item>
+        </section>
+      </submenu>
+
+      <!-- Help Menu -->
+      <submenu>
+        <attribute name="label">Help</attribute>
+        <section>
+          <item>
+            <attribute name="label">Keyboard Shortcuts</attribute>
+            <attribute name="action">win.keyboardshortcuts</attribute>
+          </item>
+          <item>
+            <attribute name="label">About</attribute>
+            <attribute name="action">win.about</attribute>
+          </item>
+        </section> 
+      </submenu>
+
     </section>
   </menu>
 </interface>
