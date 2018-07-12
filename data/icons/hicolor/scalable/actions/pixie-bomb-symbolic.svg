@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
+   version="1.1"
+   id="svg30"
+   sodipodi:docname="pixie-bomb-symbolic.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:export-filename="/home/fabio/Code/Pixie2/data/icons/hicolor/96x96/actions/pixie-color-sampler-symbolic.png"
+   inkscape:export-xdpi="576"
+   inkscape:export-ydpi="576">
+  <metadata
+     id="metadata34">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#3a3b39"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2550"
+     inkscape:window-height="1516"
+     id="namedview32"
+     showgrid="false"
+     inkscape:zoom="27.812867"
+     inkscape:cx="2.4633111"
+     inkscape:cy="12.558501"
+     inkscape:window-x="0"
+     inkscape:window-y="38"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg30"
+     inkscape:pagecheckerboard="false" />
+  <defs
+     id="defs26">
+    <style
+       id="current-color-scheme"
+       type="text/css">
+   .ColorScheme-Text { color:#5c616c; } .ColorScheme-Highlight { color:#5294e2; }
+  </style>
+  </defs>
+  <circle
+     style="fill:#bebebe;fill-opacity:1;stroke:#bebebe;stroke-width:0.83370882;stroke-opacity:1"
+     id="path11"
+     cx="6.7055292"
+     cy="9.3663797"
+     r="4.9909458" />
+  <rect
+     style="fill:#bebebe;fill-opacity:1;stroke:#bebebe;stroke-opacity:1"
+     id="rect13"
+     width="2.9123211"
+     height="1.1505467"
+     x="9.9719543"
+     y="-4.2742767"
+     ry="0.28763667"
+     transform="rotate(45)" />
+  <path
+     style="fill:none;stroke:#bebebe;stroke-width:1px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1"
+     d="M 11.074011,5.1417163 C 12.03461,3.3157667 14.757524,3.1223172 14.633515,6.2203538"
+     id="path15"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+</svg>
