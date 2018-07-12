@@ -46,7 +46,7 @@ private:
     void about_action_activated(const Glib::VariantBase &param); // added
     void quit_action_activated(const Glib::VariantBase &param);
 
-    Session session;
+    Session *session = nullptr;
 
     bool use_headerbar = false;
 
