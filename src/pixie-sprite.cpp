@@ -1,6 +1,7 @@
 #include <gdkmm/pixbuf.h>
 
 #include <vector>
+#include <cstdio>
 
 #include "pixie-layer.hpp"
 

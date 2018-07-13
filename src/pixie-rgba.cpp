@@ -52,6 +52,10 @@ Gdk::RGBA RGBA::to_gdk_rgba() const
 
 uint32_t RGBA::to_uint32_t() const
 {
-    return 0x00000000 | red | green | blue | alpha;
+    return 0x00000000 | 
+        red   << 24   | 
+        green << 16   |
+        blue  << 8    |
+        alpha << 0;
 }
 
