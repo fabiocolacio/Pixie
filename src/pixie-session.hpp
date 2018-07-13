@@ -33,7 +33,7 @@ enum MouseButton {
 class Session : public Gtk::Box {
 public:
     Session(const std::string &filename);
-    Session(Document&& document);
+    Session(Document& document);
     ~Session();
 
     std::string get_title() const;

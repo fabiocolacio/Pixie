@@ -12,6 +12,7 @@ namespace Pixie {
 class Document {
 public:
     Document(const std::string &filename);
+    Document(Sprite &sprite);
 
     int width() const;
     int height() const;

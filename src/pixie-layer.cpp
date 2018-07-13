@@ -4,6 +4,11 @@
 
 using namespace Pixie;
 
+Layer::Layer(Glib::RefPtr<Gdk::Pixbuf> pixbuf) : pixbuf(pixbuf)
+{
+
+}
+
 Layer::Layer(const std::string &filename)
 {
     pixbuf = Gdk::Pixbuf::create_from_file(filename);

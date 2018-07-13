@@ -2,6 +2,12 @@
 
 using namespace Pixie;
 
+Document::Document(Sprite &sprite) :
+    file(Gio::File::create_for_path("Untitled Sprite"))
+{
+    sprites.push_back(sprite);
+}
+
 Document::Document(const std::string &filename) :
     file(Gio::File::create_for_path(filename))
 {

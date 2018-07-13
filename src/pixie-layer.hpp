@@ -10,6 +10,7 @@ namespace Pixie {
 class Layer {
 public:
     Layer(const std::string &filename);
+    Layer(Glib::RefPtr<Gdk::Pixbuf> pixbuf);
 
     Glib::RefPtr<Gdk::Pixbuf> &get_pixbuf();
     const Glib::RefPtr<Gdk::Pixbuf> &get_pixbuf() const;

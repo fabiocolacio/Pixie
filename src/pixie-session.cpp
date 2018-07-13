@@ -22,9 +22,9 @@ Session::Session(const std::string &filename) :
     init();
 }
 
-Session::Session(Document&& document) :
+Session::Session(Document& document) :
     Box(Gtk::ORIENTATION_VERTICAL),
-    document(std::move(document))
+    document(document)
 {
     init();
 }

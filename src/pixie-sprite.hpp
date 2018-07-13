@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include "pixie-rgba.hpp"
 #include "pixie-coord.hpp"
 #include "pixie-layer.hpp"
 
@@ -12,6 +13,7 @@ namespace Pixie {
 class Sprite {
 public:
     Sprite(const std::string &filename);
+    Sprite(int width, int height, bool has_alpha, RGBA bg_color);
 
     Coord size() const;
     int width() const;

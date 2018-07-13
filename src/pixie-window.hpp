@@ -13,6 +13,7 @@ namespace Pixie {
 
 class Window : public Gtk::ApplicationWindow {
 public:
+    Window(Document &document, const Glib::RefPtr<Gtk::Application> &app);
     Window(const std::string &filename, const Glib::RefPtr<Gtk::Application> &app);
     ~Window();
 

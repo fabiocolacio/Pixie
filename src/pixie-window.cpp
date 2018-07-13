@@ -20,6 +20,13 @@
 
 using namespace Pixie;
 
+Window::Window(Document &doc, const Glib::RefPtr<Gtk::Application> &app) :
+    Gtk::ApplicationWindow(app),
+    session(new Pixie::Session(doc))
+{
+    init();
+}
+
 Window::Window(const std::string &filename, const Glib::RefPtr<Gtk::Application> &app) :
     Gtk::ApplicationWindow(app),
     session(new Session(filename))
@@ -242,6 +249,10 @@ void Window::new_action_activated(const Glib::VariantBase &param)
         int height = width_entry->get_value_as_int();
         bool alpha = alpha_button->get_active();
         RGBA color(color_button->get_rgba());
+        Sprite sprite(width, height, alpha, color);
+        Document doc(sprite);
+        auto window = new Window(doc, get_application());
+        window->present();
     }
 }
 

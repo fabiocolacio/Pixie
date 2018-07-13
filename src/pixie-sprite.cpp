@@ -1,3 +1,5 @@
+#include <gdkmm/pixbuf.h>
+
 #include <vector>
 
 #include "pixie-layer.hpp"
@@ -5,6 +7,13 @@
 #include "pixie-sprite.hpp"
 
 using namespace Pixie;
+
+Sprite::Sprite(int width, int height, bool alpha, RGBA bg)
+{
+    auto pixbuf = Gdk::Pixbuf::create(Gdk::COLORSPACE_RGB, alpha, 8, width, height);
+    pixbuf->fill(bg.to_uint32_t());
+    layers.push_back(Layer(pixbuf));
+}
 
 Sprite::Sprite(const std::string &filename)
 {
