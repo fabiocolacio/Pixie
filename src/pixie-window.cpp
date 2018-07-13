@@ -6,6 +6,11 @@
 #include <gtkmm/filechooserdialog.h>
 #include <gtkmm/aboutdialog.h>
 #include <gtkmm/menubar.h>
+#include <gtkmm/grid.h>
+#include <gtkmm/label.h>
+#include <gtkmm/spinbutton.h>
+#include <gtkmm/checkbutton.h>
+#include <gtkmm/dialog.h>
 #include <giomm/simpleaction.h>
 #include <giomm/menumodel.h>
 
@@ -57,6 +62,12 @@ void Window::init()
         action->signal_activate().connect(
             sigc::mem_fun(*this, &Window::open_action_activated));
         app->set_accel_for_action("win.open", "<Ctrl>o");
+        add_action(action);
+
+        action = Gio::SimpleAction::create("new");
+        action->signal_activate().connect(
+            sigc::mem_fun(*this, &Window::new_action_activated));
+        app->set_accel_for_action("win.new", "<Ctrl>n");
         add_action(action);
 
         action = Gio::SimpleAction::create_bool("showgrid", session->get_show_grid());
@@ -157,6 +168,80 @@ void Window::open_action_activated(const Glib::VariantBase &param)
             auto window = new Window(name, get_application());
             window->show();
         }
+    }
+}
+
+void Window::new_action_activated(const Glib::VariantBase &param)
+{
+    Gtk::Label *label = nullptr;
+    Gtk::Dialog dialog;
+    auto grid = Gtk::manage(new Gtk::Grid);
+
+    label = Gtk::manage(new Gtk::Label("Width"));
+    label->set_xalign(1.0);
+    auto width_entry = Gtk::manage(new Gtk::SpinButton(
+        Gtk::Adjustment::create(
+            20,      // value
+            1.0,     // lower bound
+            5000.0,  // upper bound
+            1.0,     // step increment
+            5.0,     // page increment
+            0.0)     // page size
+    ));
+    grid->attach(*label, 0, 0, 1, 1);
+    grid->attach_next_to(*width_entry, *label, Gtk::POS_RIGHT, 1, 1);
+
+    label = Gtk::manage(new Gtk::Label("Height"));
+    label->set_xalign(1.0);
+    auto height_entry = Gtk::manage(new Gtk::SpinButton(
+        Gtk::Adjustment::create(
+            20,      // value
+            1.0,     // lower bound
+            5000.0,  // upper bound
+            1.0,     // step increment
+            5.0,     // page increment
+            0.0)     // page size
+    ));
+    grid->attach(*label, 0, 1, 1, 1);
+    grid->attach_next_to(*height_entry, *label, Gtk::POS_RIGHT, 1, 1);
+
+    label = Gtk::manage(new Gtk::Label("Background Color"));
+    label->set_xalign(1.0);
+    auto color_button = Gtk::manage(new Gtk::ColorButton);
+    grid->attach(*label, 0, 3, 1, 1);
+    grid->attach_next_to(*color_button, *label, Gtk::POS_RIGHT, 1, 1);
+
+    label = Gtk::manage(new Gtk::Label("Alpha Channel"));
+    label->set_xalign(1.0);
+    auto alpha_button = Gtk::manage(new Gtk::CheckButton);
+    alpha_button->set_active(true);
+    auto callback = [color_button, alpha_button] {
+        ((Gtk::ColorButton*)color_button)->set_use_alpha(alpha_button->get_active()); };
+    alpha_button->signal_toggled().connect(callback);
+    callback();
+    grid->attach(*label, 0, 2, 1, 1);
+    grid->attach_next_to(*alpha_button, *label, Gtk::POS_RIGHT, 1, 1);
+
+    dialog.add_button("Cancel", 0);
+    dialog.add_button("Okay", 1);
+    dialog.set_default_response(1);
+
+    grid->property_row_spacing() = 6;
+    grid->property_column_spacing() = 12;
+    grid->set_column_homogeneous(false);
+
+    grid->show_all();
+    dialog.get_vbox()->pack_start(*grid);
+    dialog.get_vbox()->set_margin_left(18);
+    dialog.get_vbox()->set_margin_right(18);
+    dialog.get_vbox()->set_margin_top(18);
+    dialog.set_transient_for(*this);
+
+    if (dialog.run()) {
+        int width = width_entry->get_value_as_int();
+        int height = width_entry->get_value_as_int();
+        bool alpha = alpha_button->get_active();
+        RGBA color(color_button->get_rgba());
     }
 }
 

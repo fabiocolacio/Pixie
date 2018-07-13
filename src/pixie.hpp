@@ -5,8 +5,6 @@ namespace Pixie {
 
 extern Glib::RefPtr<Gtk::Application> app;
 
-void open(const Gio::Application::type_vec_files &files, const Glib::ustring &hint);
-
 }
 
 #endif

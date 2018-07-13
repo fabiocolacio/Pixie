@@ -1,0 +1,98 @@
+#include <gtkmm/application.h>
+#include <gtkmm/grid.h>
+#include <gtkmm/label.h>
+#include <gtkmm/spinbutton.h>
+#include <gtkmm/checkbutton.h>
+#include <gtkmm/dialog.h>
+
+#include <iostream>
+
+#include "pixie-window.hpp"
+
+#include "pixie.hpp"
+
+namespace Pixie {
+
+Glib::RefPtr<Gtk::Application> app =
+    Gtk::Application::create("com.github.fabiocolacio.Pixie", Gio::APPLICATION_HANDLES_OPEN);
+
+void activate()
+{
+    Gtk::Label *label = nullptr;
+    Gtk::Widget *widget = nullptr;
+    Gtk::Dialog dialog;
+    auto grid = Gtk::manage(new Gtk::Grid);
+
+    label = Gtk::manage(new Gtk::Label("Width:"));
+    widget = Gtk::manage(new Gtk::SpinButton(
+        Gtk::Adjustment::create(
+            20,      // value
+            1.0,     // lower bound
+            5000.0,  // upper bound
+            1.0,     // step increment
+            5.0,     // page increment
+            0.0)     // page size
+    ));
+    grid->attach(*label, 0, 0, 1, 1);
+    grid->attach_next_to(*widget, *label, Gtk::POS_RIGHT, 1, 1);
+
+    label = Gtk::manage(new Gtk::Label("Height:"));
+    widget = Gtk::manage(new Gtk::SpinButton(
+        Gtk::Adjustment::create(
+            20,      // value
+            1.0,     // lower bound
+            5000.0,  // upper bound
+            1.0,     // step increment
+            5.0,     // page increment
+            0.0)     // page size
+    ));
+    grid->attach(*label, 0, 1, 1, 1);
+    grid->attach_next_to(*widget, *label, Gtk::POS_RIGHT, 1, 1);
+
+    label = Gtk::manage(new Gtk::Label("Background Color:"));
+    widget = Gtk::manage(new Gtk::ColorButton);
+    grid->attach(*label, 0, 3, 1, 1);
+    grid->attach_next_to(*widget, *label, Gtk::POS_RIGHT, 1, 1);
+
+    label = Gtk::manage(new Gtk::Label("Use Alpha Channel:"));
+    auto alphabtn = Gtk::manage(new Gtk::CheckButton);
+    alphabtn->signal_toggled().connect([widget, alphabtn]{ 
+        ((Gtk::ColorButton*)widget)->set_use_alpha(alphabtn->get_active()); });
+    grid->attach(*label, 0, 2, 1, 1);
+    grid->attach_next_to(*alphabtn, *label, Gtk::POS_RIGHT, 1, 1);
+
+    dialog.add_button("Cancel", 0);
+    dialog.add_button("Okay", 1);
+    dialog.set_default_response(1);
+
+    grid->property_row_spacing() = 6;
+    grid->property_column_spacing() = 8;
+    grid->set_column_homogeneous(false);
+
+    grid->show_all();
+    dialog.get_vbox()->pack_start(*grid, true, true, 18);
+    if (dialog.run()) {
+        
+    }
+}
+
+void open(const Gio::Application::type_vec_files &files, const Glib::ustring &hint)
+{
+    for (size_t i = 0; i < files.size(); i++) {
+        auto filename = files[i]->get_path();
+
+        std::cout << "Opening file: '" << filename << "'\n";
+
+        auto window = new Window(filename, app);
+        window->present();
+    }
+}
+
+}
+
+int main(int argc, char *argv[]) {
+    Pixie::app->signal_open().connect(sigc::ptr_fun(&Pixie::open));
+    Pixie::app->signal_activate().connect(sigc::ptr_fun(&Pixie::activate));
+    return Pixie::app->run(argc, argv);
+}
+

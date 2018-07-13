@@ -26,7 +26,7 @@ private:
     void zoomout_action_activated(const Glib::VariantBase &param); // added
     void open_action_activated(const Glib::VariantBase &param); // added
     void save_action_activated(const Glib::VariantBase &param);
-    void new_window_action_activated(const Glib::VariantBase &param);
+    void new_action_activated(const Glib::VariantBase &param);
     void save_as_action_activated(const Glib::VariantBase &param);
     void export_action_activated(const Glib::VariantBase &param);
     void print_action_activated(const Glib::VariantBase &param);
