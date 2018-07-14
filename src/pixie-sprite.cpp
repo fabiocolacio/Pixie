@@ -8,7 +8,9 @@
 
 using namespace Pixie;
 
-Sprite::Sprite(int width, int height, bool alpha, RGBA bg)
+Sprite::Sprite(int width, int height, bool alpha, RGBA bg) :
+    has_alpha(alpha),
+    bg_color(bg)
 {
     auto pixbuf = Gdk::Pixbuf::create(Gdk::COLORSPACE_RGB, alpha, 8, width, height);
     pixbuf->fill(bg.to_uint32_t());
@@ -18,6 +20,16 @@ Sprite::Sprite(int width, int height, bool alpha, RGBA bg)
 Sprite::Sprite(const std::string &filename)
 {
     layers.push_back(Layer(filename)); 
+}
+
+bool Sprite::get_has_alpha() const
+{
+    return has_alpha;
+}
+
+RGBA Sprite::get_bg_color() const
+{
+    return bg_color;
 }
 
 std::size_t Sprite::n_layers() const

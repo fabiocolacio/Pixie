@@ -11,7 +11,7 @@ void Bomb::activate(GdkEvent *event, Session &session)
     Coord coord = session.get_selected_pixel_coord();
     if (session.get_lmb() && coord.x > 0 && coord.y > 0) {
         auto pixbuf = session.get_active_layer().get_pixbuf();
-        pixbuf->fill((pixbuf->get_has_alpha() ? 0xffffff00 : 0xffffffff));
+        pixbuf->fill(session.get_active_sprite().get_bg_color().to_uint32_t());
     }
 }
 

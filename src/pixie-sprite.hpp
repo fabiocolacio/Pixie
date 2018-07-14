@@ -18,6 +18,8 @@ public:
     Coord size() const;
     int width() const;
     int height() const;
+    bool get_has_alpha() const;
+    RGBA get_bg_color() const;
 
     std::size_t n_layers() const;
     std::vector<Layer> &get_layers();
@@ -27,6 +29,9 @@ public:
 
 private:
     std::vector<Layer> layers;
+
+    bool has_alpha = true;
+    RGBA bg_color = RGBA(0xffffff00);
 };
 
 }

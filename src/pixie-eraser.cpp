@@ -20,7 +20,7 @@ void Eraser::activate(GdkEvent *event, Session &session)
         Tip tip = session.get_tip(); int size = session.get_size();
         Layer layer = session.get_active_layer();
         bool has_alpha = layer.get_pixbuf()->get_has_alpha();
-        RGBA bg = (has_alpha) ? RGBA(0xffffff00) : RGBA(0Xffffffff) ;
+        RGBA bg = session.get_active_sprite().get_bg_color();
 
         if (pixel.x >= 0 && pixel.y >= 0) {
             switch (tip) {
