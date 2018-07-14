@@ -13,11 +13,14 @@ namespace Pixie {
 
 class Window : public Gtk::ApplicationWindow {
 public:
+    Window(const Glib::RefPtr<Gtk::Application> &app);
+    Window(Session *session, const Glib::RefPtr<Gtk::Application> &app);
     Window(Document &document, const Glib::RefPtr<Gtk::Application> &app);
     Window(const std::string &filename, const Glib::RefPtr<Gtk::Application> &app);
     ~Window();
 
 private:
+    void init_ui();
     void init();
 
     bool on_delete_event(GdkEventAny *event) override;
@@ -46,6 +49,8 @@ private:
     void keyboard_shortcuts_action_activated(const Glib::VariantBase &param);
     void about_action_activated(const Glib::VariantBase &param); // added
     void quit_action_activated(const Glib::VariantBase &param);
+
+    void set_session(Session *session);
 
     Session *session = nullptr;
 

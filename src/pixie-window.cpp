@@ -20,11 +20,27 @@
 
 using namespace Pixie;
 
+Window::Window(Session *session, const Glib::RefPtr<Gtk::Application> &app) :
+    Gtk::ApplicationWindow(app),
+    session(session)
+{
+    init();
+    init_ui();
+}
+
+Window::Window(const Glib::RefPtr<Gtk::Application> &app) :
+    Gtk::ApplicationWindow(app)
+{
+    init();
+    init_ui();
+}
+
 Window::Window(Document &doc, const Glib::RefPtr<Gtk::Application> &app) :
     Gtk::ApplicationWindow(app),
     session(new Pixie::Session(doc))
 {
     init();
+    init_ui();
 }
 
 Window::Window(const std::string &filename, const Glib::RefPtr<Gtk::Application> &app) :
@@ -32,6 +48,7 @@ Window::Window(const std::string &filename, const Glib::RefPtr<Gtk::Application>
     session(new Session(filename))
 {
     init();
+    init_ui();
 }
 
 Window::~Window()
@@ -39,62 +56,8 @@ Window::~Window()
     if (session != nullptr) delete session; 
 }
 
-void Window::init()
+void Window::init_ui()
 {
-    // Actions //
-    {
-        auto app = this->get_application();
-        g_assert(app);
-        Glib::RefPtr<Gio::SimpleAction> action;
-
-        action = Gio::SimpleAction::create("zoomin");
-        action->signal_activate().connect(
-            sigc::mem_fun(*this, &Window::zoomin_action_activated));
-        app->set_accel_for_action("win.zoomin", "<Ctrl>plus");
-        add_action(action);
-
-        action = Gio::SimpleAction::create("zoomfit");
-        action->signal_activate().connect(
-            sigc::mem_fun(*this, &Window::zoomfit_action_activated));
-        app->set_accel_for_action("win.zoomfit", "<Ctrl>equal");
-        add_action(action);
-
-        action = Gio::SimpleAction::create("zoomout");
-        action->signal_activate().connect(
-            sigc::mem_fun(*this, &Window::zoomout_action_activated));
-        app->set_accel_for_action("win.zoomout", "<Ctrl>minus");
-        add_action(action);
-
-        action = Gio::SimpleAction::create("open");
-        action->signal_activate().connect(
-            sigc::mem_fun(*this, &Window::open_action_activated));
-        app->set_accel_for_action("win.open", "<Ctrl>o");
-        add_action(action);
-
-        action = Gio::SimpleAction::create("new");
-        action->signal_activate().connect(
-            sigc::mem_fun(*this, &Window::new_action_activated));
-        app->set_accel_for_action("win.new", "<Ctrl>n");
-        add_action(action);
-
-        action = Gio::SimpleAction::create_bool("showgrid", session->get_show_grid());
-        action->signal_change_state().connect(
-            sigc::mem_fun(*this, &Window::showgrid_action_state_changed));
-        app->set_accel_for_action("win.showgrid", "<Ctrl>g");
-        add_action(action);
-
-        action = Gio::SimpleAction::create_bool("fullscreen", false);
-        action->signal_change_state().connect(
-            sigc::mem_fun(*this, &Window::fullscreen_action_state_changed));
-        app->set_accel_for_action("win.fullscreen", "F11");
-        add_action(action);
-
-        action = Gio::SimpleAction::create("about");
-        action->signal_activate().connect(
-            sigc::mem_fun(*this, &Window::about_action_activated));
-        add_action(action);
-    }
-
     auto builder = Gtk::Builder::create();
 
     if (use_headerbar) {
@@ -104,8 +67,13 @@ void Window::init()
         builder->get_widget("header_bar", header_bar);
         header_bar->show();
         header_bar->set_show_close_button(true);
-        header_bar->set_title(session->get_title());
-        header_bar->set_subtitle(session->get_subtitle());
+        if (session) {
+            header_bar->set_title(session->get_title());
+            header_bar->set_subtitle(session->get_subtitle());
+        }
+        else {
+            header_bar->set_title("Pixie");
+        }
         header_box.show();
         header_box.pack_start(*header_bar);
 
@@ -133,15 +101,92 @@ void Window::init()
         auto menu_bar = Gtk::manage(new Gtk::MenuBar(model));
         menu_bar->set_visible(true);
         content_box.pack_start(*menu_bar, Gtk::PACK_SHRINK);
-
-        set_title(session->get_title());
+        
+        if (session) {
+            set_title(session->get_title());
+        }
+        else {
+            set_title("Pixie");
+        }
     }
 
-    session->show();
-    content_box.pack_end(*session);
+    if (session) {
+        session->show();
+        content_box.pack_end(*session);
+    }
+
     content_box.show();
     add(content_box);
     set_default_size(600, 600);
+}
+
+void Window::init()
+{
+    // Actions //
+    auto app = this->get_application();
+    g_assert(app);
+    Glib::RefPtr<Gio::SimpleAction> action;
+
+    action = Gio::SimpleAction::create("zoomin");
+    action->signal_activate().connect( sigc::mem_fun(*this, &Window::zoomin_action_activated));
+    if (session == nullptr) action->set_enabled(false);
+    app->set_accel_for_action("win.zoomin", "<Ctrl>plus");
+    add_action(action);
+
+    action = Gio::SimpleAction::create("zoomfit");
+    action->signal_activate().connect(
+        sigc::mem_fun(*this, &Window::zoomfit_action_activated));
+    if (session == nullptr) action->set_enabled(false);
+    app->set_accel_for_action("win.zoomfit", "<Ctrl>equal");
+    add_action(action);
+
+    action = Gio::SimpleAction::create("zoomout");
+    action->signal_activate().connect(
+        sigc::mem_fun(*this, &Window::zoomout_action_activated));
+    if (session == nullptr) action->set_enabled(false);
+    app->set_accel_for_action("win.zoomout", "<Ctrl>minus");
+    add_action(action);
+
+    action = Gio::SimpleAction::create("open");
+    action->signal_activate().connect(
+        sigc::mem_fun(*this, &Window::open_action_activated));
+    app->set_accel_for_action("win.open", "<Ctrl>o");
+    add_action(action);
+
+    action = Gio::SimpleAction::create("new");
+    action->signal_activate().connect(
+        sigc::mem_fun(*this, &Window::new_action_activated));
+    app->set_accel_for_action("win.new", "<Ctrl>n");
+    add_action(action);
+
+    action = Gio::SimpleAction::create_bool("showgrid",(session) ? session->get_show_grid() : false);
+    action->signal_change_state().connect(
+        sigc::mem_fun(*this, &Window::showgrid_action_state_changed));
+    if (session == nullptr) action->set_enabled(false);
+    app->set_accel_for_action("win.showgrid", "<Ctrl>g");
+    add_action(action);
+
+    action = Gio::SimpleAction::create_bool("fullscreen", false);
+    action->signal_change_state().connect(
+        sigc::mem_fun(*this, &Window::fullscreen_action_state_changed));
+    app->set_accel_for_action("win.fullscreen", "F11");
+    add_action(action);
+
+    action = Gio::SimpleAction::create("about");
+    action->signal_activate().connect(
+        sigc::mem_fun(*this, &Window::about_action_activated));
+    add_action(action);
+}
+
+void Window::set_session(Session *session)
+{
+    this->session = session;
+    session->show();
+    content_box.pack_start(*session);
+    Glib::RefPtr<Gio::SimpleAction>::cast_static(lookup_action("showgrid"))->set_enabled(true);
+    Glib::RefPtr<Gio::SimpleAction>::cast_static(lookup_action("zoomin"))->set_enabled(true);
+    Glib::RefPtr<Gio::SimpleAction>::cast_static(lookup_action("zoomout"))->set_enabled(true);
+    Glib::RefPtr<Gio::SimpleAction>::cast_static(lookup_action("zoomfit"))->set_enabled(true);
 }
 
 void Window::zoomout_action_activated(const Glib::VariantBase &param)
@@ -171,9 +216,14 @@ void Window::open_action_activated(const Glib::VariantBase &param)
 
     if (file_chooser.run()) {
         auto files = file_chooser.get_filenames();
-        for (auto name : files) { 
-            auto window = new Window(name, get_application());
-            window->show();
+        for (auto name : files) {
+            if (session) {
+                auto window = new Window(name, get_application());
+                window->show();
+            }
+            else {
+                set_session(new Session(name));
+            }
         }
     }
 }
@@ -251,8 +301,15 @@ void Window::new_action_activated(const Glib::VariantBase &param)
         RGBA color(color_button->get_rgba());
         Sprite sprite(width, height, alpha, color);
         Document doc(sprite);
-        auto window = new Window(doc, get_application());
-        window->present();
+        auto session = new Session(doc);
+
+        if (this->session) {
+            auto window = new Window(session, get_application());
+            window->present();
+        }
+        else {
+            set_session(session);
+        }
     }
 }
 
