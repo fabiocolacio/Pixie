@@ -182,6 +182,7 @@ void Window::set_session(Session *session)
 {
     this->session = session;
     session->show();
+    set_title(session->get_title());
     content_box.pack_start(*session);
     Glib::RefPtr<Gio::SimpleAction>::cast_static(lookup_action("showgrid"))->set_enabled(true);
     Glib::RefPtr<Gio::SimpleAction>::cast_static(lookup_action("zoomin"))->set_enabled(true);
